@@ -4,7 +4,13 @@ const PORT = 3000
 
 const connectToDB = require('./db')
 
+
+const userRoute = require("./routes/user")
+
 connectToDB()
+
+
+app.use('/api/auth' , userRoute)
 
 
 app.get('/', (req,res)=>{
