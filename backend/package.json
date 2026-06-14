@@ -1,0 +1,17 @@
+{
+  "name": "notevault-backend",
+  "version": "1.0.0",
+  "description": "NoteVault is a MERN stack note-taking application that allows users to create, edit, delete, and manage their notes securely with a simple and user-friendly interface.",
+  "license": "ISC",
+  "author": "Muhammad Waqas",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongoose": "^9.7.0",
+    "nodemon": "^3.1.14"
+  }
+}
