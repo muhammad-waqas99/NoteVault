@@ -12,12 +12,14 @@ const connectToDB = require('./db')
 
 
 const userRoute = require("./routes/user")
+const notesRoute = require("./routes/notes")
 
 connectToDB()
 
 app.use(express.json())
 
 app.use('/api/auth' , userRoute)
+app.use('/api/notes' , notesRoute)
 
 
 

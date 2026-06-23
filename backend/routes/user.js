@@ -4,6 +4,8 @@ const User = require("../models/User");
 const bcrypt = require('bcrypt')
 const jwt = require("jsonwebtoken")
 
+const JWT_SECRET = process.env.JWT_SECRET;
+
 const { body, validationResult } = require("express-validator");
 const fetchUser = require("../middlewares/fetchUser");
 
@@ -35,7 +37,7 @@ router.post('/signup', [
             password:secPassword
         });
        
-         const JWT_SECRET = process.env.JWT_SECRET;
+
 
         const data = {
            user:{
@@ -80,7 +82,7 @@ router.post('/login' , [
                          return res.status(400).json({error: "Email and password are incorrect"})
             }
 
-         const JWT_SECRET = process.env.JWT_SECRET;
+
 
         const data = {
            user:{
