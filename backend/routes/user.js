@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt')
 const jwt = require("jsonwebtoken")
 
 const { body, validationResult } = require("express-validator");
+const fetchUser = require("../middlewares/fetchUser");
 
 router.post('/signup', [
     body('name', 'Name must be at least 3 characters long').isLength({ min: 3 }),
@@ -90,6 +91,18 @@ router.post('/login' , [
 
         res.status(201).json(token);
 
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+})
+
+
+router.post('/getuser' , fetchUser , async (req,res) =>{
+    try {
+        const userId = req.user.id
+        const user = await User.findById(userId).select("-password");
+        res.send(user)
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Internal Server Error" });
