@@ -60,7 +60,7 @@ router.post(
 
 
 
-//  Route 3 Update an existing Note Using :  POST "/api/notes/updatenote"  . Login required
+//  Route 3 Update an existing Note Using :  PUT "/api/notes/updatenote"  . Login required
 
 router.put('/updatenote/:id', fetchUser, async (req, res) => {
    const { title, description, tag } = req.body;
@@ -87,6 +87,35 @@ router.put('/updatenote/:id', fetchUser, async (req, res) => {
 
    res.json(note);
 });
+
+
+
+
+//  Route 4 Delete  an existing Note Using :  Delete "/api/notes/deletenote"  . Login required
+
+
+router.delete('/deletenote/:id', fetchUser, async (req, res) => {
+
+
+   let note = await Note.findById(req.params.id);
+
+   if (!note) return res.status(404).send('Not Found');
+
+   if (note.user.toString() !== req.user.id) {
+      return res.status(401).send("Not Allowed");
+   }
+
+
+
+   note = await Note.findByIdAndDelete(req.params.id );
+
+res.json({
+   success: "Note deleted",
+   note: note
+});
+});
+
+
 
 module.exports = router;
  
