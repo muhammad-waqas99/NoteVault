@@ -1,0 +1,49 @@
+/* ===== NAVBAR BASE ===== */
+.navbar {
+    background-color: #0f0f10 !important;
+    border-bottom: 1px solid #2a2a2e;
+    padding: 12px 20px;
+}
+
+/* ===== BRAND ===== */
+.navbar-brand {
+    color: #ffffff !important;
+    font-weight: 600;
+    font-size: 1.3rem;
+    letter-spacing: 0.5px;
+}
+
+.navbar-brand:hover {
+    color: #cccccc !important;
+}
+
+/* ===== NAV LINKS ===== */
+.nav-link {
+    color: #b5b5b5 !important;
+    margin-right: 10px;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+    padding: 6px 12px;
+}
+
+/* ===== HOVER ===== */
+.nav-link:hover {
+    color: #ffffff !important;
+    background-color: #1a1a1d;
+}
+
+/* ===== ACTIVE LINK ===== */
+.nav-link.active {
+    color: #ffffff !important;
+    background-color: #2a2a2e;
+}
+
+/* ===== MOBILE TOGGLE CLEANUP ===== */
+.navbar-toggler {
+    border: 1px solid #2a2a2e;
+    background-color: #1a1a1d;
+}
+
+.navbar-toggler-icon {
+    filter: invert(1);
+}
