@@ -32,7 +32,7 @@ const getNotes = async()=>{
    setNotes(json)
 }
 
-const addNote =(title, description , tag)=>{
+const addNote = async(title, description , tag)=>{
 
      const response = await fetch(`${HOST}/api/notes/add-note`,{
     method : "POST",
@@ -46,22 +46,27 @@ const addNote =(title, description , tag)=>{
 
    const json = await response.json()
 
-  const note =   {
-    _id: "6a3d8dde200bcddf7d84f8a4",
-    user: "6a3d8cd6ffe08aea611d54ef",
-    title: title,
-    description: description,
-    tag:  tag,
-    Date: "2026-06-25T20:21:50.706Z"
-  };
+  
   
 
   
-  setNotes(notes.concat(note));
+  setNotes(notes.concat(json));
   console.log(" New Note Added")
 
 }
-const deleteNote =(id)=>{
+const deleteNote =async(id)=>{
+   
+
+     const response = await fetch(`${HOST}/api/notes/deletenote/${id}`,{
+    method : "DELETE",
+    headers : {
+      "Content-Type" : "application/json",
+      "auth-token"   : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNmEzZDhjZDZmZmUwOGFlYTYxMWQ1NGVmIn0sImlhdCI6MTc4MjQxODY2MX0.KbYj_MSC0GvMr3zkBLlDVy8XQwvCc6MbY5vDeVf5NUQ"
+    },
+
+    
+   })
+
 
 
   console.log("deleting note with id : " , id )
@@ -86,6 +91,16 @@ const editNote =async(id, title, tag , description)=>{
    })
 
    const json =response.json() 
+
+  for (let index = 1; index < notes.length; index++) {
+    const element = notes[index];
+    if(element._id = id ){
+      element.title = title;
+      element.description = description;
+      element.tag = tag;
+    }
+    
+  }
 
 }
 
