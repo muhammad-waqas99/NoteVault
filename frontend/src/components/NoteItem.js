@@ -5,7 +5,7 @@ import NoteContext from "../contexts/Note/NoteContext";
 
 
 
-const NoteItem = ({ note }) => {
+const NoteItem = ({ note , updatenote}) => {
 
 
   const {deleteNote} = useContext(NoteContext)
@@ -32,10 +32,17 @@ const NoteItem = ({ note }) => {
 
           
           <div className="note-actions mt-3">
+
+            <span className="edit-icon"  onClick={()=>{
+              updatenote(note)
+            }}>
+
             <i
-              className="fa-solid fa-pen-to-square edit-icon"
+              className="fa-solid fa-pen-to-square "
               title="Edit"
             ></i>
+            </span>
+          
 
 
 

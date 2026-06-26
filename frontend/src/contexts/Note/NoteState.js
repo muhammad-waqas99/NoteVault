@@ -15,6 +15,7 @@ const [notes , setNotes] =useState([])
 
 
 
+
 const getNotes = async()=>{
       const response = await fetch(`${HOST}/api/notes/fetchallnotes`,{
     method : "GET",
@@ -80,8 +81,8 @@ const deleteNote =async(id)=>{
 }
 const editNote =async(id, title, tag , description)=>{
    
-   const response = await fetch(`${HOST}/api/notes//updatenote/${id}`,{
-    method : "POST",
+   const response = await fetch(`${HOST}/api/notes/updatenote/${id}`,{
+    method : "PUT",
     headers : {
       "Content-Type" : "application/json",
       "auth-token"   : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNmEzZDhjZDZmZmUwOGFlYTYxMWQ1NGVmIn0sImlhdCI6MTc4MjQxODY2MX0.KbYj_MSC0GvMr3zkBLlDVy8XQwvCc6MbY5vDeVf5NUQ"
@@ -90,23 +91,31 @@ const editNote =async(id, title, tag , description)=>{
     
    })
 
-   const json =response.json() 
+   const json = await response.json() 
+   console.log(json)
 
-  for (let index = 1; index < notes.length; index++) {
-    const element = notes[index];
-    if(element._id = id ){
-      element.title = title;
-      element.description = description;
-      element.tag = tag;
+
+    let newNotes = JSON.parse(JSON.stringify(notes))
+
+  for (let index = 0; index < newNotes.length; index++) {
+    const element = newNotes[index];
+    if(element._id === id ){
+      newNotes[index].title = title;
+      newNotes[index].description = description;
+      newNotes[index].tag = tag;
+
+      break
     }
+
+
     
   }
-
+ setNotes(newNotes)
 }
 
 
   return (
-    <NoteContext.Provider value={{ notes , addNote , deleteNote  , getNotes}}>
+    <NoteContext.Provider value={{ notes , addNote , deleteNote  , getNotes ,editNote}}>
       {props.children}
     </NoteContext.Provider>
   );

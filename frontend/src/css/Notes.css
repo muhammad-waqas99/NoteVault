@@ -1,0 +1,329 @@
+/* ===========================
+   Modal Overlay
+=========================== */
+
+.glass-modal-overlay{
+    position: fixed;
+    inset: 0;
+    background: rgba(5,10,20,.45);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    z-index: 9999;
+
+    animation: fadeIn .25s ease;
+}
+
+
+/* ===========================
+   Modal
+=========================== */
+
+.glass-modal{
+
+    width: 100%;
+    max-width: 620px;
+
+    background: rgba(255,255,255,.05);
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:22px;
+
+    box-shadow:0 20px 45px rgba(0,0,0,.18);
+
+    overflow:hidden;
+
+    animation: popup .25s ease;
+}
+
+
+/* ===========================
+   Header
+=========================== */
+
+.glass-header{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:22px 28px;
+
+    border-bottom:1px solid rgba(255,255,255,.08);
+
+}
+
+.glass-header h3{
+
+    color:#fff;
+    font-size:22px;
+    font-weight:600;
+
+    margin:0;
+}
+
+
+/* ===========================
+   Close Button
+=========================== */
+
+.close-btn{
+
+    width:40px;
+    height:40px;
+
+    border:none;
+    outline:none;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.06);
+
+    color:#fff;
+
+    transition:.3s;
+
+}
+
+.close-btn:hover{
+
+    transform:rotate(90deg);
+
+    background:rgba(255,255,255,.10);
+
+}
+
+
+/* ===========================
+   Body
+=========================== */
+
+.glass-body{
+
+    padding:28px;
+
+}
+
+.glass-body label{
+
+    color:#cbd5e1;
+
+    margin-bottom:8px;
+
+    display:block;
+
+    font-weight:500;
+
+}
+
+
+/* ===========================
+   Inputs
+=========================== */
+
+.glass-input{
+
+    background:rgba(255,255,255,.04)!important;
+
+    color:#fff!important;
+
+    border:1px solid rgba(255,255,255,.08)!important;
+
+    border-radius:14px;
+
+    padding:13px 16px;
+
+    box-shadow:none!important;
+
+    transition:.3s;
+
+}
+
+.glass-input:focus{
+
+    background:rgba(255,255,255,.07)!important;
+
+    border-color:#38bdf8!important;
+
+    color:#fff!important;
+
+}
+
+.glass-input::placeholder{
+
+    color:#94a3b8;
+
+}
+
+textarea{
+
+    resize:none;
+
+}
+
+
+/* ===========================
+   Footer
+=========================== */
+
+.glass-footer{
+
+    padding:22px 28px;
+
+    display:flex;
+    justify-content:flex-end;
+    gap:12px;
+
+    border-top:1px solid rgba(255,255,255,.08);
+
+}
+
+
+/* ===========================
+   Buttons
+=========================== */
+
+.cancel-btn{
+
+    background:rgba(255,255,255,.05);
+
+    color:#fff;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:12px;
+
+    padding:10px 20px;
+
+    transition:.3s;
+
+}
+
+.cancel-btn:hover{
+
+    transform:translateY(-2px);
+
+    background:rgba(255,255,255,.08);
+
+}
+
+.save-btn{
+
+    background:#0ea5e9;
+
+    color:#fff;
+
+    border:none;
+
+    border-radius:12px;
+
+    padding:10px 22px;
+
+    transition:.3s;
+
+}
+
+.save-btn:hover{
+
+    opacity:.9;
+
+    transform:translateY(-2px);
+
+}
+
+
+/* ===========================
+   Animation
+=========================== */
+
+@keyframes popup{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(25px) scale(.95);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0) scale(1);
+
+    }
+
+}
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+    }
+
+    to{
+
+        opacity:1;
+
+    }
+
+}
+
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media(max-width:768px){
+
+    .glass-modal{
+
+        max-width:100%;
+
+    }
+
+    .glass-header,
+    .glass-body,
+    .glass-footer{
+
+        padding:20px;
+
+    }
+
+    .glass-header h3{
+
+        font-size:19px;
+
+    }
+
+}
+
+@media(max-width:576px){
+
+    .glass-footer{
+
+        flex-direction:column;
+
+    }
+
+    .cancel-btn,
+    .save-btn{
+
+        width:100%;
+
+    }
+
+}
