@@ -3,9 +3,7 @@ const router = express.Router();
 const User = require("../models/User");
 const bcrypt = require('bcrypt')
 const jwt = require("jsonwebtoken")
-
-const JWT_SECRET = process.env.JWT_SECRET;
-
+const JWT_SECRET = "88733!!$$%@#$@jkdjas"
 const { body, validationResult } = require("express-validator");
 const fetchUser = require("../middlewares/fetchUser");
 
@@ -89,6 +87,7 @@ router.post('/login' , [
             id:user._id
            }
         }
+
         const token = jwt.sign(data, JWT_SECRET)
 
         res.status(201).json(token);
