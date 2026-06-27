@@ -45,7 +45,26 @@ const Navbar = () => {
           >
             About
           </Link>
+
+
         </li>
+                <li className="nav-item">
+          <Link
+            className={`nav-link ${location.pathname === "/login" ? "active" : ""}`}
+            to="/login"
+          >
+            Login
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link
+            className={`nav-link ${location.pathname === "/signup" ? "active" : ""}`}
+            to="/signup"
+          >
+            Signup
+          </Link>
+        </li>
+
 
       </ul>
     </div>
