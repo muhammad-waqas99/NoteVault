@@ -13,7 +13,7 @@ const Notes = () => {
     id:"",
     etitle: "",
     edescription: "",
-    etag: "",
+    etag: "Personal",
   });
 
   useEffect(() => {
@@ -60,6 +60,9 @@ const Notes = () => {
 
       <div className="row my-4">
 
+       <h2 className="container">
+        {notes.length ===0 &&  "No Notes To Display "}
+          </h2>
         {notes.map((note) => (
           <NoteItem
             key={note._id}
@@ -153,6 +156,7 @@ const Notes = () => {
               </button>
 
               <button
+                disabled={note.etitle.length <5  || note.edescription.length<5 }
                 className="save-btn"
                 onClick={handleClick}
               >

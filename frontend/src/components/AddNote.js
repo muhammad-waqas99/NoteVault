@@ -7,15 +7,26 @@ const AddNote = () => {
     
       const { addNote } = useContext(NoteContext) ;
 
-      const [note , setnote] = useState({title : " ", description : " " , tag : " "} )
+      const [note , setnote] = useState({title : "", description : "" , tag : ""} )
 
       const handleChange =(e)=>{
          setnote({...note, [e.target.name]  : e.target.value })
       }
-      const handleClick  =(e)=>{
-          e.preventDefault();
-            addNote(note.title,note.description,note.tag)
-      }
+   const handleClick = (e) => {
+    e.preventDefault();
+
+    addNote(
+        note.title,
+        note.description,
+        note.tag.trim() === "" ? "Personal" : note.tag
+    );
+
+    setnote({
+        title: "",
+        description: "",
+        tag: ""
+    });
+};
       
   return (
   <>
@@ -34,6 +45,9 @@ const AddNote = () => {
                     id="title"
                     name="title"
                     onChange={handleChange}
+                    required
+                    minLength={5}
+                    value={note.title}
                 />
             </div>
 
@@ -46,6 +60,9 @@ const AddNote = () => {
                     rows="4"
                     name="description"
                     onChange={handleChange}
+                    required
+                    minLength={5}
+                    value={note.description}
                 ></textarea>
             </div>
 
@@ -58,16 +75,20 @@ const AddNote = () => {
                     id="tag"
                     name="tag"
                     onChange={handleChange}
+                    value={note.tag}
+                
                 />
             </div>
 
             <button
+                disabled={note.title.length <5  || note.description.length<5 }
                 type="submit"
                 className="btn add-note-btn"
                 onClick={handleClick}
             >
-                <i className="fa-solid fa-plus me-2"></i>
+                <i className="fa-solid fa-plus me-2"  disabled={note.title.length <5  || note.description.length<5 }></i>
                 Add Note
+                     
             </button>
 
         </form>

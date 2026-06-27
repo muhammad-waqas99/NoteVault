@@ -1,150 +1,115 @@
-/* ==========================
-   Navbar
-========================== */
-
 .navbar{
+    background: rgba(255,255,255,.04) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
 
-    background:rgba(255,255,255,.04)!important;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 18px;
 
-    backdrop-filter:blur(20px);
-    -webkit-backdrop-filter:blur(20px);
+    margin: 15px 20px;
+    padding: 14px 24px;
 
-    border:1px solid rgba(255,255,255,.08);
-
-    border-radius:18px;
-
-    margin:15px 20px;
-
-    padding:14px 24px;
-
-    box-shadow:0 10px 25px rgba(0,0,0,.12);
-
+    box-shadow: 0 10px 25px rgba(0,0,0,.12);
 }
 
-/* ==========================
-   Logo
-========================== */
-
 .navbar-brand{
-
-    color:#fff!important;
-
+    color:#fff !important;
     font-size:1.35rem;
-
     font-weight:700;
-
     letter-spacing:.5px;
-
     transition:.3s;
-
 }
 
 .navbar-brand:hover{
-
-    color:#7dd3fc!important;
-
+    color:#7dd3fc !important;
 }
 
-/* ==========================
-   Links
-========================== */
+.navbar-nav{
+    margin-left:auto;
+    align-items:center;
+}
 
+li{
+    margin-bottom: 8px;
+}
 .nav-link{
-
-    color:#cbd5e1!important;
-
-    padding:10px 18px!important;
-
+    color:#cbd5e1 !important;
+    padding:10px 18px !important;
     margin-left:8px;
-
     border-radius:12px;
-
     transition:.3s;
-
     font-weight:500;
-
 }
-
-/* Hover */
 
 .nav-link:hover{
-
-    color:#fff!important;
-
+    color:#fff !important;
     background:rgba(255,255,255,.05);
-
 }
-
-/* Active */
 
 .nav-link.active{
-
-    color:#7dd3fc!important;
-
+    color:#7dd3fc !important;
     background:rgba(56,189,248,.12);
-
     border:1px solid rgba(56,189,248,.20);
-
 }
 
-/* ==========================
-   Toggler
-========================== */
-
 .navbar-toggler{
-
-    border:1px solid rgba(255,255,255,.08)!important;
-
-    background:rgba(255,255,255,.05)!important;
-
+    border:1px solid rgba(255,255,255,.08) !important;
+    background:rgba(255,255,255,.05) !important;
     border-radius:12px;
-
     padding:8px 10px;
-
-    box-shadow:none!important;
-
+    box-shadow:none !important;
 }
 
 .navbar-toggler:focus{
-
-    box-shadow:none!important;
-
+    box-shadow:none !important;
 }
 
 .navbar-toggler-icon{
-
     filter:invert(1);
-
 }
-
-/* ==========================
-   Mobile Menu
-========================== */
 
 .navbar-collapse{
-
     margin-top:12px;
-
 }
 
-/* ==========================
-   Responsive
-========================== */
-
-@media(max-width:992px){
+@media (max-width:992px){
 
     .navbar{
-
-        margin:10px;
-
+        margin:12px;
         padding:12px 18px;
+    }
 
+    .navbar-nav{
+        align-items:flex-start;
     }
 
     .nav-link{
-
         margin:6px 0;
+        width:100%;
+    }
 
+}
+
+
+@media (max-width:576px){
+
+    .navbar{
+        margin:8px;
+        padding:10px 14px;
+        border-radius:14px;
+    }
+
+    .navbar-brand{
+        font-size:1.15rem;
+    }
+
+    .nav-link{
+        padding:12px 14px !important;
+        font-size:.95rem;
+    }
+
+    .navbar-toggler{
+        padding:6px 8px;
     }
 
 }

@@ -6,41 +6,52 @@ const Navbar = () => {
   const location = useLocation();
 
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
-      <div className="container-fluid">
-        <Link className="navbar-brand" to="/">
-          NoteVault
-        </Link>
+<nav className="navbar navbar-expand-lg">
+  <div className="container-fluid">
 
-        <div className="collapse navbar-collapse">
-          <ul className="navbar-nav me-auto">
+    <Link className="navbar-brand" to="/">
+      NoteVault
+    </Link>
 
-            <li className="nav-item">
-              <Link
-                className={`nav-link ${
-                  location.pathname === "/" ? "active" : ""
-                }`}
-                to="/"
-              >
-                Home
-              </Link>
-            </li>
+    {/* Toggler */}
+    <button
+      className="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span className="navbar-toggler-icon"></span>
+    </button>
 
-            <li className="nav-item">
-              <Link
-                className={`nav-link ${
-                  location.pathname === "/about" ? "active" : ""
-                }`}
-                to="/about"
-              >
-                About
-              </Link>
-            </li>
+    <div className="collapse navbar-collapse" id="navbarNav">
+      <ul className="navbar-nav ms-auto">
 
-          </ul>
-        </div>
-      </div>
-    </nav>
+        <li className="nav-item">
+          <Link
+            className={`nav-link ${location.pathname === "/" ? "active" : ""}`}
+            to="/"
+          >
+            Home
+          </Link>
+        </li>
+
+        <li className="nav-item">
+          <Link
+            className={`nav-link ${location.pathname === "/about" ? "active" : ""}`}
+            to="/about"
+          >
+            About
+          </Link>
+        </li>
+
+      </ul>
+    </div>
+
+  </div>
+</nav>
   );
 };
 

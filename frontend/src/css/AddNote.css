@@ -18,6 +18,14 @@
 
 }
 
+.btn:disabled{
+
+    opacity: var(--bs-btn-disabled-opacity);
+      background:#0ea5e9;
+
+    color:#fff;
+}
+
 .add-note-card h2{
 
     color:#fff;
@@ -79,6 +87,7 @@
     padding:10px 22px;
 
     transition:.3s;
+    width: auto;
 
 }
 
@@ -97,5 +106,62 @@
 textarea{
 
     resize:none;
+
+}
+
+
+
+
+
+
+@media (max-width: 768px) {
+
+    .add-note-card{
+        max-width: 100%;
+        margin: 30px 15px;
+        padding: 25px 20px;
+    }
+
+    .add-note-card h2{
+        font-size: 1.6rem;
+    }
+
+    .glass-input{
+        padding: 10px 14px;
+    }
+
+    .add-note-btn{
+        width: 100%;
+        padding: 12px;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .add-note-card{
+        margin: 20px 10px;
+        padding: 20px 15px;
+        border-radius: 16px;
+    }
+
+    .add-note-card h2{
+        font-size: 1.35rem;
+        text-align: center;
+    }
+
+    .form-label{
+        font-size: .95rem;
+    }
+
+    .glass-input{
+        font-size: .95rem;
+        padding: 10px 12px;
+    }
+
+    .add-note-btn{
+        font-size: .95rem;
+        padding: 10px;
+    }
 
 }
