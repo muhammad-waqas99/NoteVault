@@ -57,7 +57,7 @@ const Login = () => {
                 <label htmlFor="email" className="form-label">Email</label>
 
                 <input
-                    type="text"
+                    type="email"
                     className="form-control glass-input"
                     id="email"
                     name="email"
@@ -91,7 +91,7 @@ const Login = () => {
                 type="submit"
                 className="btn add-note-btn"
                
-                type="submit"
+            
             >
                 <i className="fa-solid fa-plus me-2"  ></i>
                 Login

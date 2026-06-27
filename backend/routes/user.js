@@ -14,16 +14,16 @@ router.post('/signup', [
 ], async (req, res) => {
     try {
         const result = validationResult(req);
-
+       let success = false
         if (!result.isEmpty()) {
-            return res.status(400).json({ errors: result.array() });
+            return res.status(400).json({ success , errors: result.array() });
         }
 
         const { name, email, password } = req.body;
 
         let user = await User.findOne({ email });
         if (user) {
-            return res.status(400).json({ error: "User already exists" });
+            return res.status(400).json({ success , error: "User already exists" });
         }
         
         const salt = await bcrypt.genSalt(10);
@@ -43,12 +43,12 @@ router.post('/signup', [
            }
         }
         const token = jwt.sign(data, JWT_SECRET)
-
-        res.status(201).json(token);
+            success = true
+        res.status(201).json({success , token });
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Internal Server Error" });
+        res.status(500).json({ success  ,error: "Internal Server Error" });
     }
 });
 
