@@ -60,9 +60,12 @@ router.post('/login' , [
 
          const result = validationResult(req);
 
+         let success = false;
+
         if (!result.isEmpty()) {
-            return res.status(400).json({ errors: result.array() });
-        }
+            success = false
+            return res.status(400).json({ success , errors: result.array() });
+                    }
 
     
         try {
@@ -72,12 +75,13 @@ router.post('/login' , [
             let user = await User.findOne({email})
 
             if(!user){
-                return res.status(400).json({error: "Email and password are incorrect"})
+                success = false
+                return res.status(400).json({success , error: "Email and password are incorrect"})
             }
 
             const comparePassword = await bcrypt.compare(password, user.password);
             if(!comparePassword){
-                         return res.status(400).json({error: "Email and password are incorrect"})
+                         return res.status(400).json({ success , error: "Email and password are incorrect"})
             }
 
 
@@ -89,12 +93,14 @@ router.post('/login' , [
         }
 
         const token = jwt.sign(data, JWT_SECRET)
-
-        res.status(201).json(token);
+          success = true ;
+        res.status(201).json({success , token});
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Internal Server Error" });
+
+        success = false
+        res.status(500).json({ success  , error: "Internal Server Error" });
     }
 })
 
