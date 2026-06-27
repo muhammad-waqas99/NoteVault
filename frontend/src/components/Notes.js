@@ -2,8 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import NoteContext from "../contexts/Note/NoteContext";
 import NoteItem from "./NoteItem";
 import "../css/Notes.css";
+import AlertContext from "../contexts/Alert/AlertContext";
 
 const Notes = () => {
+  
+    const{showAlert} =useContext(AlertContext)
+
 
   const { notes, getNotes ,editNote } = useContext(NoteContext);
 
@@ -53,6 +57,13 @@ const Notes = () => {
 
     );
     setShowModal(false);
+    showAlert("Note Updated Successfully " , "success")
+   window.scrollTo({
+  top: 0,
+  left: 0,
+  behavior: 'smooth'
+});
+
   };
 
   return (

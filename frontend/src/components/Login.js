@@ -1,9 +1,13 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import AlertContext from '../contexts/Alert/AlertContext'
 
 const Login = () => {
 
      const navigate = useNavigate()
+     
+         const{showAlert} =useContext(AlertContext)
+     
 
 
     const HOST = "http://localhost:5000"
@@ -37,9 +41,11 @@ const Login = () => {
 
       localStorage.setItem("auth-token" , json.token)
       navigate("/")
+      showAlert("Login Successfully " , "success")
+window.scrollTo(0, 0);
   }
   else{
-    alert("invalid credentials")
+    showAlert("Invalid Credentials" , "danger")
   }
 
 

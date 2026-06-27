@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import AlertContext from '../contexts/Alert/AlertContext'
 
 const Signup = () => {
-
+       const {showAlert} = useContext(AlertContext)
      const navigate = useNavigate()
 
 
@@ -36,10 +37,14 @@ const Signup = () => {
      if(json.success){
 
       localStorage.setItem("auth-token" , json.token)
+   
       navigate("/login")
+         showAlert("Account Created Successfully", "success");
   }
   else{
-    alert("Some Error Occur")
+ 
+    showAlert('Some Error Occured Please Try Again ' , "success")
+
   }
 
 

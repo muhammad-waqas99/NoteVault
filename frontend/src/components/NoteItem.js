@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
 import "../css/NoteItem.css";
 import NoteContext from "../contexts/Note/NoteContext";
+import AlertContext from "../contexts/Alert/AlertContext";
 
 
 
 
 const NoteItem = ({ note , updatenote}) => {
-
+    const{showAlert} =useContext(AlertContext)
 
   const {deleteNote} = useContext(NoteContext)
   return (
@@ -35,6 +36,7 @@ const NoteItem = ({ note , updatenote}) => {
 
             <span className="edit-icon"  onClick={()=>{
               updatenote(note)
+              
             }}>
 
             <i
@@ -49,8 +51,9 @@ const NoteItem = ({ note , updatenote}) => {
 <span
   className="delete-icon"
   onClick={() => {
-    console.log("Span Clicked");
+     
     deleteNote(note._id);
+    showAlert("Note Deleted " , "success")
   }}
 >
   <i className="fa-solid fa-trash"></i>

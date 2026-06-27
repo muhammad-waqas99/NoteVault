@@ -1,8 +1,11 @@
 import React, { useContext, useState } from 'react'
 import NoteContext from '../contexts/Note/NoteContext';
 import '../css/AddNote.css'
+import AlertContext from '../contexts/Alert/AlertContext';
 
 const AddNote = () => {
+
+    const{showAlert} =useContext(AlertContext)
 
     
       const { addNote } = useContext(NoteContext) ;
@@ -20,6 +23,8 @@ const AddNote = () => {
         note.description,
         note.tag.trim() === "" ? "Personal" : note.tag
     );
+
+    showAlert("Note Added Successfully " , "success")
 
     setnote({
         title: "",
