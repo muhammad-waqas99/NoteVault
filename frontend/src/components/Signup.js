@@ -36,14 +36,14 @@ const Signup = () => {
 
      if(json.success){
 
-      localStorage.setItem("auth-token" , json.token)
+      localStorage.setItem("token" , json.token)
    
       navigate("/login")
          showAlert("Account Created Successfully", "success");
   }
   else{
  
-    showAlert('Some Error Occured Please Try Again ' , "success")
+    showAlert(json.error, "success")
 
   }
 

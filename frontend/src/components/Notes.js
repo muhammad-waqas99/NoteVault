@@ -71,16 +71,19 @@ const Notes = () => {
 
       <div className="row my-4">
 
-       <h2 className="container">
-        {notes.length ===0 &&  "No Notes To Display "}
-          </h2>
-        {notes.map((note) => (
-          <NoteItem
-            key={note._id}
-            note={note}
-            updatenote={updatenote}
-          />
-        ))}
+       
+      {Array.isArray(notes) && notes.length === 0 && (
+  <h2>No Notes To Display</h2>
+)}
+
+{Array.isArray(notes) &&
+  notes.map((note) => (
+    <NoteItem
+      key={note._id}
+      note={note}
+      updatenote={updatenote}
+    />
+))}
 
       </div>
 

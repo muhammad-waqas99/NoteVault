@@ -39,10 +39,10 @@ const Login = () => {
 
      if(json.success){
 
-      localStorage.setItem("auth-token" , json.token)
+      localStorage.setItem("token" , json.token)
       navigate("/")
       showAlert("Login Successfully " , "success")
-window.scrollTo(0, 0);
+
   }
   else{
     showAlert("Invalid Credentials" , "danger")

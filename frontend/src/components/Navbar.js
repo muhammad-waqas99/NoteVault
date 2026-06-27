@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import '../css/navbar.css'
 
 const Navbar = () => {
+  const navigate = useNavigate()
   const location = useLocation();
 
   return (
@@ -48,22 +49,51 @@ const Navbar = () => {
 
 
         </li>
-                <li className="nav-item">
-          <Link
-            className={`nav-link ${location.pathname === "/login" ? "active" : ""}`}
-            to="/login"
-          >
-            Login
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link
-            className={`nav-link ${location.pathname === "/signup" ? "active" : ""}`}
-            to="/signup"
-          >
-            Signup
-          </Link>
-        </li>
+
+           
+
+{
+  localStorage.getItem("token") ? (
+  
+      <button
+        onClick={() => {
+    localStorage.removeItem("token");
+  navigate("/login");
+
+        }}
+      >
+        Logout
+      </button>
+    
+  ) : (
+    <>
+      <li className="nav-item">
+        <Link
+          className={`nav-link ${
+            location.pathname === "/login" ? "active" : ""
+          }`}
+          to="/login"
+        >
+          Login
+        </Link>
+      </li>
+
+      <li className="nav-item">
+        <Link
+          className={`nav-link ${
+            location.pathname === "/signup" ? "active" : ""
+          }`}
+          to="/signup"
+        >
+          Signup
+        </Link>
+      </li>
+    </>
+  )
+}
+
+
+      
 
 
       </ul>

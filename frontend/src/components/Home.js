@@ -1,18 +1,19 @@
-import React from 'react'
-import Notes from './Notes'
-import AddNote from './AddNote'
+import { Navigate } from "react-router-dom";
+import Notes from "./Notes";
+import AddNote from "./AddNote";
 
 const Home = () => {
+
+  if (!localStorage.getItem("token")) {
+    return <Navigate to="/login" replace />;
+  }
+
   return (
-
     <>
-    <AddNote/>
-    <Notes/>
-
+      <AddNote />
+      <Notes />
     </>
+  );
+};
 
-
-  )
-}
-
-export default Home
+export default Home;
