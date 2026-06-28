@@ -1,8 +1,8 @@
 const mongoose = require("mongoose")
-const mongooseURI = "mongodb://localhost:27017/notevault"
+const MongoDB_URI = process.env.MongoDB_URI 
 
 const connectToDB =()=>{
-    mongoose.connect(mongooseURI)
+    mongoose.connect(MongoDB_URI)
     .then(()=>{
         console.log("MongoDB Connected")
     })

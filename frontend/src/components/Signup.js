@@ -7,7 +7,7 @@ const Signup = () => {
      const navigate = useNavigate()
 
 
-    const HOST = "http://localhost:5000"
+    const HOST = process.env.REACT_APP_API_URL;
           const [credential , setcredential] =useState({name: "" , email : "" , password : ""})
 
       const handleChange = (e) => {

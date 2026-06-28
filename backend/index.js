@@ -5,6 +5,8 @@ const dotenv = require('dotenv')
 
 dotenv.config();
 
+const dns = require('dns')
+dns.setServers(['1.1.1.1','0.0.0.0'])
 
 const env = require('./')
 const PORT = process.env.PORT || 5000

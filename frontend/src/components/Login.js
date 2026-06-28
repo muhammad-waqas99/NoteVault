@@ -10,7 +10,7 @@ const Login = () => {
      
 
 
-    const HOST = "http://localhost:5000"
+    const HOST = process.env.REACT_APP_API_URL;
           const [credential , setcredential] =useState({email : "" , password : ""})
 
       const handleChange = (e) => {

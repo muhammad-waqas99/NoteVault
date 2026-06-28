@@ -7,9 +7,9 @@ import NoteContext from "./NoteContext";
 const NoteState = (props) => {
 
 
-  const HOST = "http://localhost:5000"
+  // const HOST = "http://localhost:5000"
 
-
+    const HOST = process.env.REACT_APP_API_URL;
 
 
 const notesInitial =[]
