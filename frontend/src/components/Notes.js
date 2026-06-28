@@ -9,9 +9,10 @@ const Notes = () => {
     const{showAlert} =useContext(AlertContext)
 
 
-  const { notes, getNotes ,editNote } = useContext(NoteContext);
+  let { notes, getNotes ,editNote ,setNotes} = useContext(NoteContext);
 
   const [showModal, setShowModal] = useState(false);
+
 
   const [note, setNote] = useState({
     id:"",
@@ -41,8 +42,15 @@ const Notes = () => {
       ...note,
       [e.target.name]: e.target.value,
     });
+
+
+
+
   };
 
+
+
+    
   const handleClick = () => {
     
    editNote(
@@ -58,32 +66,78 @@ const Notes = () => {
     );
     setShowModal(false);
     showAlert("Note Updated Successfully " , "success")
-   window.scrollTo({
-  top: 0,
-  left: 0,
-  behavior: 'smooth'
-});
+
 
   };
+
+
+
+const [search, setSearch] = useState("");
+
+
+const searchNotes = (e) => {
+  const value = e.target.value;
+  setSearch(value)
+
+};
+
+const filteredNotes = Array.isArray(notes)
+  ? notes.filter((note) =>
+      note.title.toLowerCase().includes(search.toLowerCase())
+    )
+  : [];
+
+
 
   return (
     <>
 
+
+   
+
+
+     {/* Search Box */}
+
+              <div className="input-group">
+          <input
+            type="text"
+            name="search"
+            className="form-control"
+            placeholder="Search..."
+        
+        onChange={(e) => {
+        searchNotes(e)
+}}
+          />
+        
+        </div>
+
+
+
+
+
+
+
+
+     {/* Search Box */}
+
+
+
+
+
       <div className="row my-4">
 
        
-      {Array.isArray(notes) && notes.length === 0 && (
-  <h2>No Notes To Display</h2>
-)}
 
-{Array.isArray(notes) &&
-  notes.map((note) => (
-    <NoteItem
-      key={note._id}
-      note={note}
-      updatenote={updatenote}
-    />
-))}
+{Array.isArray(notes) && notes.length === 0 ? (
+  <h2>No Notes To Display</h2>
+) : search.length > 0 && filteredNotes.length === 0 ? (
+  <h4 className="text-center mt-3">No matching notes found</h4>
+) : (
+  filteredNotes.map((note) => (
+    <NoteItem key={note._id} note={note} updatenote={updatenote} />
+  ))
+)}
 
       </div>
 

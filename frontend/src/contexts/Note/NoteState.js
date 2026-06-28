@@ -117,7 +117,7 @@ const editNote =async(id, title, tag , description)=>{
 
 
   return (
-    <NoteContext.Provider value={{ notes , addNote , deleteNote  , getNotes ,editNote}}>
+    <NoteContext.Provider value={{ notes , addNote , deleteNote  , getNotes ,editNote ,setNotes}}>
       {props.children}
     </NoteContext.Provider>
   );
