@@ -71,6 +71,20 @@ body {
 
 
 
+.tags-container{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    justify-content:flex-end;
+
+    gap:8px;
+
+    max-width:180px;
+
+}
+
 .note-tag{
 
     background:rgba(56,189,248,.10)!important;
@@ -79,12 +93,25 @@ body {
 
     border:1px solid rgba(56,189,248,.20);
 
-    border-radius:20px;
+    border-radius:999px;
 
-    padding:6px 12px;
+    padding:5px 12px;
 
-    font-size:.75rem;
+    font-size:.72rem;
 
+    font-weight:500;
+
+    white-space:nowrap;
+
+    transition:.3s;
+
+}
+
+.note-tag:hover{
+
+    background:rgba(56,189,248,.16)!important;
+
+    border-color:rgba(56,189,248,.35);
 }
 
 

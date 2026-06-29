@@ -15,6 +15,7 @@ router.get("/fetchallnotes", fetchUser, async (req, res) => {
   }
 });
 
+
 router.post(
   "/add-note",
   fetchUser,
@@ -23,6 +24,28 @@ router.post(
     body("description", "Password must be at least 6 characters long").isLength(
       { min: 6 },
     ),
+      body("tags")
+    .exists()
+    .withMessage("tagss field is required")
+    .isArray({ min: 1, max: 3 })
+    .withMessage("You must select between 1 and 3 tagss")
+    .custom((tagss) => {
+      const uniquetagss = new Set(tagss);
+
+      if (uniquetagss.size !== tagss.length) {
+        throw new Error("Duplicate tagss are not allowed");
+      }
+
+      return true;
+    }),
+     body("tags.*")
+    .isString()
+    .withMessage("Each tags must be a string")
+    .trim()
+    .notEmpty()
+    .withMessage("tags cannot be empty")
+    .isLength({ min: 2, max: 20 })
+    .withMessage("Each tags must be between 2 and 20 characters")
   ],
   async (req, res) => {
 
@@ -30,7 +53,7 @@ router.post(
    
         try {
 
-          const {tag , description , title} = req.body
+          const {tags , description , title} = req.body
           const result = validationResult(req);
 
         if (!result.isEmpty()) {
@@ -39,7 +62,7 @@ router.post(
 
 
           const note = new Note({
-            title, tag ,description , user : req.user.id
+            title, tags ,description , user : req.user.id
           })
 
           const savednote = await note.save()
@@ -63,7 +86,7 @@ router.post(
 //  Route 3 Update an existing Note Using :  PUT "/api/notes/updatenote"  . Login required
 
 router.put('/updatenote/:id', fetchUser, async (req, res) => {
-   const { title, description, tag } = req.body;
+   const { title, description, tags } = req.body;
 
    let note = await Note.findById(req.params.id);
 
@@ -77,7 +100,7 @@ router.put('/updatenote/:id', fetchUser, async (req, res) => {
    const newNote = {};
    if (title) newNote.title = title;
    if (description) newNote.description = description;
-   if (tag) newNote.tag = tag;
+   if (tags) newNote.tags = tags;
 
    note = await Note.findByIdAndUpdate(
       req.params.id,

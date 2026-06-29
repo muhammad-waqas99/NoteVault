@@ -33,9 +33,11 @@ const getNotes = async()=>{
 
    console.log(json)
    setNotes(json)
+   console.log(notes)
 }
 
-const addNote = async(title, description , tag)=>{
+const addNote = async(title, description , tags)=>{
+  console.log('getting tags by add note ' , tags)
 
      const response = await fetch(`${HOST}/api/notes/add-note`,{
     method : "POST",
@@ -44,10 +46,11 @@ const addNote = async(title, description , tag)=>{
       "auth-token"   : localStorage.getItem('token')
     },
 
-     body: JSON.stringify({title,description,tag})
+     body: JSON.stringify({title,description,tags})
    })
 
    const json = await response.json()
+   console.log("add note " , json)
 
   
   

@@ -17,11 +17,16 @@ const noteSchema = new mongoose.Schema({
         required:true,
 
     },
-    tag:{
-         type:String,
-        default:"General",
+tags: {
+  type: [String],
+  default: ["General"],
+  validate: {
+    validator: function (arr) {
+      return arr.length <= 3;
     },
-
+    message: "Max 3 tags allowed"
+  }
+},
     
     Date:{
         type: Date,

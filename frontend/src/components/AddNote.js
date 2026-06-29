@@ -5,12 +5,26 @@ import AlertContext from '../contexts/Alert/AlertContext';
 
 const AddNote = () => {
 
+  const allTags = [
+  "Personal",
+  "Work",
+  "Study",
+  "Ideas",
+  "Important",
+  "Shopping",
+  "Health",
+  "Finance",
+  "Travel",
+  "Projects"
+];
+
     const{showAlert} =useContext(AlertContext)
 
+const [selectedTags , setselectedTags] =useState([])
     
       const { addNote } = useContext(NoteContext) ;
 
-      const [note , setnote] = useState({title : "", description : "" , tag : ""} )
+      const [note , setnote] = useState({title : "", description : "" } )
 
       const handleChange =(e)=>{
          setnote({...note, [e.target.name]  : e.target.value })
@@ -21,7 +35,7 @@ const AddNote = () => {
     addNote(
         note.title,
         note.description,
-        note.tag.trim() === "" ? "Personal" : note.tag
+       selectedTags.length === 0 ? ["Personal"] : selectedTags
     );
 
     showAlert("Note Added Successfully " , "success")
@@ -29,9 +43,41 @@ const AddNote = () => {
     setnote({
         title: "",
         description: "",
-        tag: ""
+       
     });
+
+    setselectedTags([])
 };
+
+
+
+
+
+
+const handleCheckChange = (e) => {
+
+    const value = e.target.value;
+
+    if (selectedTags.includes(value)) {
+
+        setselectedTags(
+            selectedTags.filter(tag => tag !== value)
+        );
+
+    } else {
+
+        setselectedTags([
+            ...selectedTags,
+            value
+        ]);
+
+    }
+
+};
+   
+    
+
+
       
   return (
   <>
@@ -72,17 +118,59 @@ const AddNote = () => {
             </div>
 
             <div className="mb-4">
-                <label htmlFor="tag" className="form-label">Tag</label>
+              
 
-                <input
-                    type="text"
-                    className="form-control glass-input"
-                    id="tag"
-                    name="tag"
-                    onChange={handleChange}
-                    value={note.tag}
-                
-                />
+
+
+<div className="mb-4">
+    <label className="form-label">
+        Tags
+        <span className="tag-limit">
+            ({selectedTags.length}/3)
+        </span>
+    </label>
+
+<div className="tags-grid">
+
+    {allTags.map((tag) => (
+
+        <button
+            key={tag}
+            type="button"
+            className={`tag-chip ${
+                selectedTags.includes(tag) ? "active-tag" : ""
+            }`}
+            onClick={() => {
+
+                if (
+                    selectedTags.length === 3 &&
+                    !selectedTags.includes(tag)
+                ) {
+
+                    showAlert("Only 3 tags are allowed", "danger");
+                    return;
+
+                }
+
+                handleCheckChange({
+                    target: {
+                        value: tag
+                    }
+                });
+
+            }}
+        >
+            {tag}
+        </button>
+
+    ))}
+
+</div>
+
+</div>
+
+
+               
             </div>
 
             <button
@@ -100,7 +188,6 @@ const AddNote = () => {
 
     </div>
 </>
-  )
+  );
 }
-
 export default AddNote

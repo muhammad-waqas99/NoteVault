@@ -109,6 +109,105 @@ textarea{
 
 }
 
+/* ==========================
+   Tags
+========================== */
+
+.tags-grid{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
+    margin-top:12px;
+
+}
+
+.tag-chip{
+
+    border:none;
+
+    outline:none;
+
+    background:rgba(255,255,255,.05);
+
+    color:#cbd5e1;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:999px;
+
+    padding:8px 16px;
+
+    font-size:.85rem;
+
+    transition:.3s;
+
+    cursor:pointer;
+
+}
+
+.tag-chip:hover{
+
+    transform:translateY(-2px);
+
+    border-color:rgba(56,189,248,.30);
+
+}
+
+.active-tag{
+
+    background:rgba(56,189,248,.15);
+
+    color:#7dd3fc;
+
+    border-color:rgba(56,189,248,.35);
+
+}
+
+.tag-chip{
+
+    background:rgba(255,255,255,.05);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    color:#cbd5e1;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.tag-chip:hover{
+
+    transform:translateY(-2px);
+
+    border-color:#38bdf8;
+
+}
+
+.active-tag{
+
+    background:rgba(56,189,248,.15);
+
+    border-color:#38bdf8;
+
+    color:#7dd3fc;
+
+}
+
+.tag-limit{
+
+    color:#7dd3fc;
+
+    font-size:.8rem;
+
+    margin-left:8px;
+
+}
 
 
 

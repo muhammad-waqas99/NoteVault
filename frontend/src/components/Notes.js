@@ -18,7 +18,7 @@ const Notes = () => {
     id:"",
     etitle: "",
     edescription: "",
-    etag: "Personal",
+    etags: "Personal",
   });
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const Notes = () => {
       id:currentnote._id,
       etitle: currentnote.title,
       edescription: currentnote.description,
-      etag: currentnote.tag,
+      etags: currentnote.tags,
     });
 
     setShowModal(true);
@@ -59,7 +59,7 @@ const Notes = () => {
 
         note.etitle,
 
-        note.etag,
+        note.etags,
 
         note.edescription
 
@@ -83,7 +83,7 @@ const searchNotes = (e) => {
 
 const filteredNotes = Array.isArray(notes)
   ? notes.filter((note) =>
-      note.title.toLowerCase().includes(search.toLowerCase())
+      (note.title || "").toLowerCase().includes(search.toLowerCase())
     )
   : [];
 
@@ -203,8 +203,8 @@ const filteredNotes = Array.isArray(notes)
                 <input
                   type="text"
                   className="form-control glass-input"
-                  name="etag"
-                  value={note.etag}
+                  name="etags"
+                  value={note.etags}
                   onChange={handleChange}
                 />
 
