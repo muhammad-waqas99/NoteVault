@@ -84,7 +84,7 @@ const deleteNote =async(id)=>{
    setNotes(newNotes)
 
 }
-const editNote =async(id, title, tag , description)=>{
+const editNote =async(id, title, tags , description)=>{
    
    const response = await fetch(`${HOST}/api/notes/updatenote/${id}`,{
     method : "PUT",
@@ -92,7 +92,7 @@ const editNote =async(id, title, tag , description)=>{
       "Content-Type" : "application/json",
      "auth-token"   : localStorage.getItem('token')
     },
-     body : JSON.stringify({title,description,tag})
+     body : JSON.stringify({title,description,tags})
     
    })
 
@@ -107,7 +107,7 @@ const editNote =async(id, title, tag , description)=>{
     if(element._id === id ){
       newNotes[index].title = title;
       newNotes[index].description = description;
-      newNotes[index].tag = tag;
+      newNotes[index].tags = tags;
 
       break
     }

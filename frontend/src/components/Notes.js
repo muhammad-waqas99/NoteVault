@@ -5,12 +5,23 @@ import "../css/Notes.css";
 import AlertContext from "../contexts/Alert/AlertContext";
 
 const Notes = () => {
-  
+    const allTags = [
+  "Personal",
+  "Work",
+  "Study",
+  "Ideas",
+  "Important",
+  "Shopping",
+  "Health",
+  "Finance",
+  "Travel",
+  "Projects"
+];
     const{showAlert} =useContext(AlertContext)
 
 
   let { notes, getNotes ,editNote ,setNotes} = useContext(NoteContext);
-
+const [selectedTags,setselectedTags] =useState([])
   const [showModal, setShowModal] = useState(false);
 
 
@@ -18,7 +29,7 @@ const Notes = () => {
     id:"",
     etitle: "",
     edescription: "",
-    etags: "Personal",
+ 
   });
 
   useEffect(() => {
@@ -31,8 +42,9 @@ const Notes = () => {
       id:currentnote._id,
       etitle: currentnote.title,
       edescription: currentnote.description,
-      etags: currentnote.tags,
+     
     });
+    setselectedTags(currentnote.tags || [])
 
     setShowModal(true);
   };
@@ -59,7 +71,7 @@ const Notes = () => {
 
         note.etitle,
 
-        note.etags,
+        selectedTags,
 
         note.edescription
 
@@ -88,6 +100,26 @@ const filteredNotes = Array.isArray(notes)
   : [];
 
 
+const handleCheckChange = (e) => {
+
+    const value = e.target.value;
+
+    if (selectedTags.includes(value)) {
+
+        setselectedTags(
+            selectedTags.filter(tag => tag !== value)
+        );
+
+    } else {
+
+        setselectedTags([
+            ...selectedTags,
+            value
+        ]);
+
+    }
+
+};
 
   return (
     <>
@@ -196,19 +228,45 @@ const filteredNotes = Array.isArray(notes)
 
               </div>
 
-              <div className="mb-3">
 
-                <label>Tag</label>
+<div className="tags-grid">
 
-                <input
-                  type="text"
-                  className="form-control glass-input"
-                  name="etags"
-                  value={note.etags}
-                  onChange={handleChange}
-                />
+    {allTags.map((tag) => (
 
-              </div>
+        <button
+            key={tag}
+            type="button"
+            className={`tag-chip ${
+            
+              selectedTags.includes(tag)? "active-tag" : ""
+            }`}
+            onClick={() => {
+
+                if (
+                    selectedTags.length === 3 &&
+                    !selectedTags.includes(tag)
+                ) {
+
+                    showAlert("Only 3 tags are allowed", "danger");
+                    return;
+
+                }
+
+                handleCheckChange({
+                    target: {
+                        value: tag
+                    }
+                });
+
+            }}
+        >
+            {tag}
+        </button>
+
+    ))}
+
+</div>
+
 
             </div>
 
