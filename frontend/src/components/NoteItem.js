@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "../css/NoteItem.css";
 import NoteContext from "../contexts/Note/NoteContext";
 import AlertContext from "../contexts/Alert/AlertContext";
@@ -6,10 +6,13 @@ import AlertContext from "../contexts/Alert/AlertContext";
 
 
 
-const NoteItem = ({ note , updatenote}) => {
+const NoteItem = ({ note , updatenote , handleClickDelete}) => {
     const{showAlert} =useContext(AlertContext)
 
-  const {deleteNote,togglePin} = useContext(NoteContext)
+    const {togglePin} = useContext(NoteContext)
+
+
+
   return (
     <div className="col-lg-4 col-md-6 mb-4">
       <div className="card note-card h-100">
@@ -48,7 +51,7 @@ const NoteItem = ({ note , updatenote}) => {
       note.isPinned ? "active-pin" : ""
     }`}
   onClick={(e) => {
-    e.stopPropagation(); // important if card clickable hai
+    e.stopPropagation(); 
     togglePin(note._id);
     console.log("pin click", note._id);
   }}
@@ -79,10 +82,8 @@ const NoteItem = ({ note , updatenote}) => {
 
 <span
   className="delete-icon"
-  onClick={() => {
-     
-    deleteNote(note._id);
-    showAlert("Note Deleted " , "success")
+  onClick={()=>{
+    handleClickDelete(note)
   }}
 >
   <i className="fa-solid fa-trash"></i>
@@ -91,6 +92,9 @@ const NoteItem = ({ note , updatenote}) => {
 
         </div>
       </div>
+
+
+
     </div>
   );
 };

@@ -24,8 +24,10 @@ const Notes = () => {
   const [selectedTags, setselectedTags] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [activeTags, setActiveTags] = useState([]);
+  const[showDeleteModal , setShowDeleteModal] =useState(false)
+  const[selectedNote , setSelectedNote] =useState()
 
-  let { notes, getNotes, editNote, setNotes } = useContext(NoteContext);
+  let { notes, getNotes, editNote, setNotes ,deleteNote} = useContext(NoteContext);
 
 
 
@@ -112,6 +114,18 @@ const toggleTag = (tag) => {
     );
   };
 
+
+
+      const handleClickDelete= (note)=>{
+    setSelectedNote(note)
+      setShowDeleteModal(true)
+    }
+
+    const handleConfirmDelete=()=>{
+      deleteNote(selectedNote._id)
+      setShowDeleteModal(false)
+    }
+
   return (
     <>
       <div className="input-group">
@@ -149,7 +163,7 @@ const toggleTag = (tag) => {
           <h2 className="mt-3">No Notes To Display</h2>
         ) : filteredNotes.length === 0 ? (
     
-          <h4 className="text-center mt-4 w-100 text-muted">
+          <h4 className="text-center mt-4 w-100 text-white">
             <i className="fa-solid fa-magnifying-glass mb-2 d-block fs-3"></i>
             No matching notes found
           </h4>
@@ -160,6 +174,7 @@ const toggleTag = (tag) => {
               key={noteItem._id}
               note={noteItem}
               updatenote={updatenote}
+            handleClickDelete={handleClickDelete}
             />
           ))
         )}
@@ -255,6 +270,58 @@ const toggleTag = (tag) => {
                 Save
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+
+
+
+      
+{/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div className="glass-modal-overlay">
+          <div className="glass-modal">
+            
+            <div className="glass-header">
+              <h3 className="text-danger">
+                <i className="fa-solid fa-trash me-2"></i>
+                Confirm Delete
+              </h3>
+              <button
+                className="close-btn"
+                onClick={() => setShowDeleteModal(false)}
+              >
+                <i className="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+
+            <div className="glass-body text-center py-4">
+              <i className="fa-solid fa-circle-exclamation text-warning mb-3" style={{fontSize: "3rem"}}></i>
+              <h5 className="mb-2">Are you sure?</h5>
+              <p className="text-white">
+                Do you really want to delete this note? This process cannot be undone.
+              </p>
+            </div>
+
+            <div className="glass-footer">
+              <button
+                className="cancel-btn"
+                onClick={() => setShowDeleteModal(false)}
+              >
+                Cancel
+              </button>
+
+              <button
+                className="btn btn-danger px-4"
+                style={{borderRadius: "8px"}}
+                onClick={handleConfirmDelete}
+              >
+                <i className="fa-solid fa-trash-can me-2"></i>
+                Yes, Delete
+              </button>
+            </div>
+            
           </div>
         </div>
       )}
