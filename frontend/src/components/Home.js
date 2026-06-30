@@ -1,6 +1,7 @@
 import { Navigate } from "react-router-dom";
 import Notes from "./Notes";
 import AddNote from "./AddNote";
+import SkeletonNote from "./SkeletonNote";
 
 const Home = () => {
   if (!localStorage.getItem("token")) {
@@ -11,6 +12,8 @@ const Home = () => {
     <div className="nv-home-wrapper">
       <AddNote />
       <Notes />
+
+     
     </div>
   );
 };

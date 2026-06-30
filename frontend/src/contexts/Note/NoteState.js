@@ -15,7 +15,7 @@ const NoteState = (props) => {
 const notesInitial =[]
 const [notes , setNotes] =useState(notesInitial)
 
-
+  const [loadingSkeleton ,setLoadingSkeleton] =useState(false)
 
 
 const getNotes = async()=>{
@@ -30,9 +30,11 @@ const getNotes = async()=>{
    })
 
    const json = await response.json()
+   
 
    console.log(json)
    setNotes(json)
+   setLoadingSkeleton(false)
    console.log(notes)
 }
 
@@ -156,7 +158,7 @@ setNotes(newNotes)
 
 
   return (
-    <NoteContext.Provider value={{ notes , addNote , deleteNote  , getNotes ,editNote ,setNotes ,togglePin}}>
+    <NoteContext.Provider value={{ notes , addNote , deleteNote  , getNotes ,editNote ,setNotes ,togglePin , setLoadingSkeleton, loadingSkeleton}}>
       {props.children}
     </NoteContext.Provider>
   );

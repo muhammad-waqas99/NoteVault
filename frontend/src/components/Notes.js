@@ -3,6 +3,7 @@ import NoteContext from "../contexts/Note/NoteContext";
 import NoteItem from "./NoteItem";
 import "../css/Notes.css";
 import AlertContext from "../contexts/Alert/AlertContext";
+import SkeletonNote from "./SkeletonNote";
 
 const Notes = () => {
   const allTags = [
@@ -27,7 +28,8 @@ const Notes = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedNote, setSelectedNote] = useState();
 
-  let { notes, getNotes, editNote, setNotes, deleteNote } = useContext(NoteContext);
+
+  let { notes, getNotes, editNote, setNotes, deleteNote  , loadingSkeleton , setLoadingSkeleton} = useContext(NoteContext);
 
   const [note, setNote] = useState({
     id: "",
@@ -36,7 +38,9 @@ const Notes = () => {
   });
 
   useEffect(() => {
+    setLoadingSkeleton(true)
     getNotes();
+   
     // eslint-disable-next-line
   }, []);
 
@@ -149,7 +153,9 @@ const Notes = () => {
 
 <div className="nv-notes-content">
   <div className="nv-notes-grid">
-    {!Array.isArray(sortedNotes) || sortedNotes.length === 0 ? (
+    {loadingSkeleton ? (
+      Array.from({ length: 6 }).map((_, index) => <SkeletonNote key={index} />)
+    ) : !Array.isArray(sortedNotes) || sortedNotes.length === 0 ? (
       <h2 className="mt-3">No Notes To Display</h2>
     ) : filteredNotes.length === 0 ? (
       <h4 className="text-center mt-4 w-100">

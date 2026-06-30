@@ -1,0 +1,54 @@
+.nv-skeleton-card {
+  background-color: var(--bg-ivory);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(17, 17, 17, 0.05);
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* The Pulse Animation */
+@keyframes nv-pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+.nv-skeleton-title, 
+.nv-skeleton-desc, 
+.nv-skeleton-tag, 
+.nv-skeleton-icon {
+  background-color: rgba(17, 17, 17, 0.08);
+  animation: nv-pulse 1.5s infinite ease-in-out;
+  border-radius: 4px;
+}
+
+.nv-skeleton-title { height: 20px; width: 60%; }
+.nv-skeleton-desc { height: 12px; width: 100%; }
+.nv-skeleton-desc.short { width: 80%; }
+.nv-skeleton-footer { display: flex; justify-content: space-between; margin-top: auto; }
+.nv-skeleton-tag { height: 20px; width: 50px; }
+.nv-skeleton-icon { height: 20px; width: 20px; border-radius: 50%; }
+
+/* Container jo grid control karega */
+.nv-notes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Yeh 3 equal columns banayega */
+  gap: 24px; /* Cards ke darmiyan space */
+  width: 100%;
+}
+
+/* Responsive banne ke liye (optional but recommended) */
+@media (max-width: 992px) {
+  .nv-notes-grid {
+    grid-template-columns: repeat(2, 1fr); /* Tablet par 2 columns */
+  }
+}
+
+@media (max-width: 600px) {
+  .nv-notes-grid {
+    grid-template-columns: 1fr; /* Mobile par 1 column */
+  }
+}
