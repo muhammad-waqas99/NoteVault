@@ -4,6 +4,17 @@ import NoteItem from "./NoteItem";
 import "../css/Notes.css";
 import AlertContext from "../contexts/Alert/AlertContext";
 import SkeletonNote from "./SkeletonNote";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faMagnifyingGlass,
+  faPenToSquare,
+  faXmark,
+  faFloppyDisk,
+  faTrash,
+  faTrashCan,
+  faCircleExclamation,
+  faSpinner,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Notes = () => {
   const allTags = [
@@ -27,9 +38,11 @@ const Notes = () => {
   const [activeTags, setActiveTags] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedNote, setSelectedNote] = useState();
+  const [editLoading, setEditLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
-
-  let { notes, getNotes, editNote, setNotes, deleteNote  , loadingSkeleton , setLoadingSkeleton} = useContext(NoteContext);
+  let { notes, getNotes, editNote, setNotes, deleteNote, loadingSkeleton, setLoadingSkeleton , loading } =
+    useContext(NoteContext);
 
   const [note, setNote] = useState({
     id: "",
@@ -38,9 +51,8 @@ const Notes = () => {
   });
 
   useEffect(() => {
-    setLoadingSkeleton(true)
+    setLoadingSkeleton(true);
     getNotes();
-   
     // eslint-disable-next-line
   }, []);
 
@@ -65,10 +77,15 @@ const Notes = () => {
     });
   };
 
-  const handleClick = () => {
-    editNote(note.id, note.etitle, selectedTags, note.edescription);
-    setShowModal(false);
-    showAlert("Note Updated Successfully ", "success");
+  const handleClick = async () => {
+    setEditLoading(true);
+    try {
+      await editNote(note.id, note.etitle, selectedTags, note.edescription);
+      setShowModal(false);
+      showAlert("Note Updated Successfully ", "success");
+    } finally {
+      setEditLoading(false);
+    }
   };
 
   const searchNotes = (e) => {
@@ -83,8 +100,7 @@ const Notes = () => {
           n.description?.toLowerCase().includes(search.toLowerCase());
 
         const tagMatch =
-          activeTags.length === 0 ||
-          n.tags?.includes(activeTags[0]);
+          activeTags.length === 0 || n.tags?.includes(activeTags[0]);
 
         return textMatch && tagMatch;
       })
@@ -114,10 +130,15 @@ const Notes = () => {
     setShowDeleteModal(true);
   };
 
-  const handleConfirmDelete = () => {
-    deleteNote(selectedNote._id);
-    setShowDeleteModal(false);
-    showAlert("Note Deleted Successfully" , "success")
+  const handleConfirmDelete = async () => {
+    setDeleteLoading(true);
+    try {
+      await deleteNote(selectedNote._id);
+      setShowDeleteModal(false);
+      showAlert("Note Deleted Successfully", "success");
+    } finally {
+      setDeleteLoading(false);
+    }
   };
 
   return (
@@ -133,7 +154,6 @@ const Notes = () => {
         />
       </div>
 
-     
       <div className="nv-filter-tags-scroll">
         <div className="nv-filter-tags">
           {allTags.map((tag) => (
@@ -151,43 +171,48 @@ const Notes = () => {
         </div>
       </div>
 
-<div className="nv-notes-content">
-  <div className="nv-notes-grid">
-    {loadingSkeleton ? (
-      Array.from({ length: 6 }).map((_, index) => <SkeletonNote key={index} />)
-    ) : !Array.isArray(sortedNotes) || sortedNotes.length === 0 ? (
-      <h2 className="mt-3">No Notes To Display</h2>
-    ) : filteredNotes.length === 0 ? (
-      <h4 className="text-center mt-4 w-100">
-        <i className="fa-solid fa-magnifying-glass mb-2 d-block fs-3"></i>
-        No matching notes found
-      </h4>
-    ) : (
-      filteredNotes.map((noteItem) => (
-        <NoteItem
-          key={noteItem._id}
-          note={noteItem}
-          updatenote={updatenote}
-          handleClickDelete={handleClickDelete}
-        />
-      ))
-    )}
-  </div>
-</div>
+      <div className="nv-notes-content">
+        <div className="nv-notes-grid">
+          {loadingSkeleton ? (
+            Array.from({ length: 6 }).map((_, index) => (
+              <SkeletonNote key={`skel-${index}`} />
+            ))
+          ) : !Array.isArray(sortedNotes) || sortedNotes.length === 0 ? (
+            <h2 className="mt-3">No Notes To Display</h2>
+          ) : filteredNotes.length === 0 ? (
+            <h4 className="text-center mt-4 w-100">
+              <FontAwesomeIcon
+                icon={faMagnifyingGlass}
+                className="mb-2 d-block fs-3"
+              />
+              No matching notes found
+            </h4>
+          ) : (
+            filteredNotes.map((noteItem) => (
+              <NoteItem
+                key={noteItem._id}
+                note={noteItem}
+                updatenote={updatenote}
+                handleClickDelete={handleClickDelete}
+              />
+            ))
+          )}
+        </div>
+      </div>
 
       {showModal && (
         <div className="nv-modal-overlay">
           <div className="nv-modal">
             <div className="nv-modal-header">
               <h3>
-                <i className="fa-solid fa-pen-to-square me-2"></i>
+                <FontAwesomeIcon icon={faPenToSquare} className="me-2" />
                 Edit Note
               </h3>
               <button
                 className="nv-modal-close"
                 onClick={() => setShowModal(false)}
               >
-                <i className="fa-solid fa-xmark"></i>
+                <FontAwesomeIcon icon={faXmark} />
               </button>
             </div>
 
@@ -246,19 +271,28 @@ const Notes = () => {
               <button
                 className="nv-btn-cancel"
                 onClick={() => setShowModal(false)}
+                disabled={loading}
               >
                 Cancel
               </button>
 
               <button
                 disabled={
-                  note.etitle.length < 5 || note.edescription.length < 5
+                  loading ||
+                  note.etitle.length < 5 ||
+                  note.edescription.length < 5
                 }
                 className="nv-btn-save"
                 onClick={handleClick}
               >
-                <i className="fa-solid fa-floppy-disk me-2"></i>
-                Save
+                {loading ? (
+                  <FontAwesomeIcon icon={faSpinner} spin />
+                ) : (
+                  <>
+                    <FontAwesomeIcon icon={faFloppyDisk} className="me-2" />
+                    Save
+                  </>
+                )}
               </button>
             </div>
           </div>
@@ -271,19 +305,22 @@ const Notes = () => {
           <div className="nv-modal nv-modal-small">
             <div className="nv-modal-header">
               <h3 className="nv-text-danger">
-                <i className="fa-solid fa-trash me-2"></i>
+                <FontAwesomeIcon icon={faTrash} className="me-2" />
                 Confirm Delete
               </h3>
               <button
                 className="nv-modal-close"
                 onClick={() => setShowDeleteModal(false)}
               >
-                <i className="fa-solid fa-xmark"></i>
+                <FontAwesomeIcon icon={faXmark} />
               </button>
             </div>
 
             <div className="nv-modal-body nv-modal-center">
-              <i className="fa-solid fa-circle-exclamation nv-warning-icon"></i>
+              <FontAwesomeIcon
+                icon={faCircleExclamation}
+                className="nv-warning-icon"
+              />
               <h5 className="nv-modal-title">Are you sure?</h5>
               <p className="nv-modal-text">
                 Do you really want to delete this note? This process cannot be undone.
@@ -294,6 +331,7 @@ const Notes = () => {
               <button
                 className="nv-btn-cancel"
                 onClick={() => setShowDeleteModal(false)}
+                disabled={loading}
               >
                 Cancel
               </button>
@@ -301,9 +339,16 @@ const Notes = () => {
               <button
                 className="nv-btn-danger"
                 onClick={handleConfirmDelete}
+                disabled={loading}
               >
-                <i className="fa-solid fa-trash-can me-2"></i>
-                Yes, Delete
+                {loading ? (
+                  <FontAwesomeIcon icon={faSpinner} spin />
+                ) : (
+                  <>
+                    <FontAwesomeIcon icon={faTrashCan} className="me-2" />
+                    Yes, Delete
+                  </>
+                )}
               </button>
             </div>
           </div>

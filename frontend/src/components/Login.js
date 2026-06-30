@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AlertContext from '../contexts/Alert/AlertContext';
 import '../css/Auth.css';
+import NoteContext from '../contexts/Note/NoteContext';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ const Login = () => {
   
   const [credential, setcredential] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false); 
-
+const { setGlobalLoading } = useContext(NoteContext);
   const handleChange = (e) => {
     setcredential({
       ...credential,
@@ -18,8 +19,11 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setGlobalLoading(true); 
+
+  try {
     const response = await fetch(`${HOST}/api/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -34,7 +38,12 @@ const Login = () => {
     } else {
       showAlert("Invalid Credentials", "danger");
     }
-  };
+  } catch (error) {
+    showAlert("Something went wrong", "danger");
+  } finally {
+    setGlobalLoading(false);
+  }
+};
 
   return (
     <div className="nv-auth-wrapper">

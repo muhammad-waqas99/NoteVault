@@ -1,12 +1,15 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AlertContext from '../contexts/Alert/AlertContext';
+import NoteContext from '../contexts/Note/NoteContext'; 
 import '../css/Auth.css';
 
 const Signup = () => {
   const { showAlert } = useContext(AlertContext);
+  const { setGlobalLoading } = useContext(NoteContext); 
   const navigate = useNavigate();
   const HOST = process.env.REACT_APP_API_URL;
+  
   const [credential, setcredential] = useState({ name: "", email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
 
@@ -19,27 +22,32 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, email, password } = credential;
+    setGlobalLoading(true); 
 
-    const response = await fetch(`${HOST}/api/auth/signup`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name, email, password })
-    });
+    try {
+      const { name, email, password } = credential;
+      const response = await fetch(`${HOST}/api/auth/signup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password })
+      });
 
-    const json = await response.json();
-    console.log(json);
+      const json = await response.json();
 
-    if (json.success) {
-      localStorage.setItem("token", json.token);
-      navigate("/login");
-      showAlert("Account Created Successfully", "success");
-    } else {
-      showAlert(json.error, "danger");
+      if (json.success) {
+        localStorage.setItem("token", json.token);
+        navigate("/login");
+        showAlert("Account Created Successfully", "success");
+      } else {
+        showAlert(json.error || "Signup failed", "danger");
+      }
+    } catch (error) {
+      showAlert("Something went wrong", "danger");
+    } finally {
+      setGlobalLoading(false); 
     }
   };
+
 
   return (
     <div className="nv-auth-wrapper">

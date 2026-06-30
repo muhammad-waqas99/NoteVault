@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react';
 import NoteContext from '../contexts/Note/NoteContext';
 import '../css/AddNote.css';
 import AlertContext from '../contexts/Alert/AlertContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const AddNote = () => {
   const allTags = [
@@ -9,19 +11,17 @@ const AddNote = () => {
     "Shopping", "Health", "Finance", "Travel", "Projects"
   ];
 
+  const { addNote, loading } = useContext(NoteContext);
   const { showAlert } = useContext(AlertContext);
   const [selectedTags, setselectedTags] = useState([]);
-  const { addNote } = useContext(NoteContext);
   const [note, setnote] = useState({ title: "", description: "" });
 
   const handleChange = (e) => {
     setnote({ ...note, [e.target.name]: e.target.value });
   };
 
-  const handleClick = (e) => {
-    e.preventDefault();
-
-    addNote(
+  const handleClick = async () => {
+    await addNote(
       note.title,
       note.description,
       selectedTags.length === 0 ? ["Personal"] : selectedTags
@@ -29,11 +29,7 @@ const AddNote = () => {
 
     showAlert("Note Added Successfully ", "success");
 
-    setnote({
-      title: "",
-      description: "",
-    });
-
+    setnote({ title: "", description: "" });
     setselectedTags([]);
   };
 
@@ -52,17 +48,19 @@ const AddNote = () => {
       <div className="nv-add-note-card">
         <h2 className="nv-add-note-title">Add New Note</h2>
 
-        <form>
-
-
-
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleClick();
+          }}
+        >
           <div className="nv-form-group">
-  <label htmlFor="title" className="nv-form-label">
-    Title 
-    <span className="nv-input-hint">(min 3 chars)</span>
-  </label>
-  <input
-                type="text"
+            <label htmlFor="title" className="nv-form-label">
+              Title
+              <span className="nv-input-hint">(min 3 chars)</span>
+            </label>
+            <input
+              type="text"
               className="nv-input"
               id="title"
               name="title"
@@ -70,15 +68,15 @@ const AddNote = () => {
               required
               minLength={5}
               value={note.title}
-  />
+            />
+          </div>
 
-
-  <div className="nv-form-group">
-  <label htmlFor="description" className="nv-form-label">
-    Description 
-    <span className="nv-input-hint">(min 6 chars)</span>
-  </label>
-  <textarea
+          <div className="nv-form-group">
+            <label htmlFor="description" className="nv-form-label">
+              Description
+              <span className="nv-input-hint">(min 6 chars)</span>
+            </label>
+            <textarea
               className="nv-textarea"
               id="description"
               rows="4"
@@ -87,10 +85,8 @@ const AddNote = () => {
               required
               minLength={5}
               value={note.description}
-  />
-</div>
-</div>
-
+            />
+          </div>
 
           <div className="nv-form-group">
             <label className="nv-form-label">
@@ -123,13 +119,18 @@ const AddNote = () => {
           </div>
 
           <button
-            disabled={note.title.length < 3 || note.description.length < 6}
+            disabled={loading || note.title.length < 3 || note.description.length < 6}
             type="submit"
             className="nv-btn-add"
-            onClick={handleClick}
           >
-            <i className="fa-solid fa-plus" style={{ marginRight: '8px' }}></i>
-            Add Note
+            {loading ? (
+              <FontAwesomeIcon icon={faSpinner} spin />
+            ) : (
+              <>
+                <FontAwesomeIcon icon={faPlus} style={{ marginRight: '8px' }} />
+                Add Note
+              </>
+            )}
           </button>
         </form>
       </div>
