@@ -27,6 +27,10 @@ const Notes = () => {
 
   let { notes, getNotes, editNote, setNotes } = useContext(NoteContext);
 
+
+
+  
+
   const [note, setNote] = useState({
     id: "",
     etitle: "",
@@ -48,6 +52,9 @@ const Notes = () => {
     setShowModal(true);
   };
 
+let sortedNotes =[...notes].sort((a, b) => {
+  return (b.isPinned === true) - (a.isPinned === true);
+});
   const handleChange = (e) => {
     setNote({
       ...note,
@@ -66,8 +73,8 @@ const Notes = () => {
     setSearch(value);
   };
 
-const filteredNotes = Array.isArray(notes)
-    ? notes.filter((n) => {
+const filteredNotes = Array.isArray(sortedNotes)
+    ? sortedNotes.filter((n) => {
         // Text Search
         const textMatch =
           n.title?.toLowerCase().includes(search.toLowerCase()) ||
@@ -138,7 +145,7 @@ const toggleTag = (tag) => {
       </div>
 <div className="row my-4">
        
-        {!Array.isArray(notes) || notes.length === 0 ? (
+        {!Array.isArray(sortedNotes) || sortedNotes.length === 0 ? (
           <h2 className="mt-3">No Notes To Display</h2>
         ) : filteredNotes.length === 0 ? (
     

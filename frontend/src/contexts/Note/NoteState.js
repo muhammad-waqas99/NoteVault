@@ -97,7 +97,7 @@ const editNote =async(id, title, tags , description)=>{
    })
 
    const json = await response.json() 
-   console.log(json)
+
 
 
     let newNotes = JSON.parse(JSON.stringify(notes))
@@ -119,8 +119,44 @@ const editNote =async(id, title, tags , description)=>{
 }
 
 
+
+const togglePin =async(id)=>{
+   const response = await fetch(`${HOST}/api/notes/togglepin/${id}`,{
+    method : "PUT",
+    headers : {
+      "Content-Type" : "application/json",
+     "auth-token"   : localStorage.getItem('token')
+    },
+
+    
+   })
+
+   const json = await response.json() 
+  if (!json.success) {
+  return;
+}
+
+   const newNotes = JSON.parse(JSON.stringify(notes))
+     for (let index = 0; index < newNotes.length; index++) {
+    const element = newNotes[index];
+    if(element._id === id ){
+      newNotes[index].isPinned = !newNotes[index].isPinned;
+
+
+      break
+    }
+
+
+
+
+
+}
+setNotes(newNotes)
+}
+
+
   return (
-    <NoteContext.Provider value={{ notes , addNote , deleteNote  , getNotes ,editNote ,setNotes}}>
+    <NoteContext.Provider value={{ notes , addNote , deleteNote  , getNotes ,editNote ,setNotes ,togglePin}}>
       {props.children}
     </NoteContext.Provider>
   );

@@ -9,7 +9,7 @@ import AlertContext from "../contexts/Alert/AlertContext";
 const NoteItem = ({ note , updatenote}) => {
     const{showAlert} =useContext(AlertContext)
 
-  const {deleteNote} = useContext(NoteContext)
+  const {deleteNote,togglePin} = useContext(NoteContext)
   return (
     <div className="col-lg-4 col-md-6 mb-4">
       <div className="card note-card h-100">
@@ -40,6 +40,25 @@ const NoteItem = ({ note , updatenote}) => {
           <p className="card-text flex-grow-1">
             {note.description}
           </p>
+
+
+          <span className="pin-icon" onClick={() => togglePin(note._id)}>
+ <span
+    className={`pin-icon  ${
+      note.isPinned ? "active-pin" : ""
+    }`}
+  onClick={(e) => {
+    e.stopPropagation(); // important if card clickable hai
+    togglePin(note._id);
+    console.log("pin click", note._id);
+  }}
+  
+>
+  <i
+    className={`fa-solid fa-thumbtack`}
+  />
+</span>
+</span>
 
           
           <div className="note-actions mt-3">

@@ -27,6 +27,11 @@ tags: {
     message: "Max 3 tags allowed"
   }
 },
+
+  isPinned: {
+     type:Boolean,
+     default:false
+  },
     
     Date:{
         type: Date,

@@ -3,6 +3,7 @@ const fetchUser = require("../middlewares/fetchUser");
 const Note = require("../models/Note");
 const router = express.Router();
 const { body, validationResult } = require("express-validator");
+const { findById } = require("../models/User");
 
 router.get("/fetchallnotes", fetchUser, async (req, res) => {
   try {
@@ -138,6 +139,40 @@ res.json({
 });
 });
 
+
+
+
+router.put('/togglepin/:id', fetchUser, async (req, res) => {
+  let success = false;
+  
+  try {
+   
+    let note = await Note.findById(req.params.id);
+    if (!note) {
+      return res.status(404).json({ success, error: "You are not allowed to modify this note" });
+    }
+
+    
+    if (note.user.toString() !== req.user.id) { 
+      return res.status(401).json({ success, error: "You are not allowed to modify this note" });
+    }
+
+   
+    note.isPinned = !note.isPinned;
+    await note.save(); 
+
+    success = true;
+    res.json({ success, note });
+
+  } catch (error) {
+    let success = false
+    console.error(error.message);
+res.status(500).json({
+  success: false,
+  error: "Internal Server Error"
+});
+  }
+});
 
 
 module.exports = router;
