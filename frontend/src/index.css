@@ -1,54 +1,73 @@
-body {
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500&display=swap');
+
+:root {
+  --bg-body: #efeeea; 
+  --bg-ivory: #ffffff; 
+  --text-black: #111111;
+  --accent-blue: #0b2447;
   
-    font-family: "Poppins", sans-serif;
-   
+  --font-body: 'Poppins', sans-serif;
+  --font-secondary: 'Roboto', sans-serif;
+  --font-display: 'Tusker', sans-serif;
+  
+  --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.08);
+  
+  --transition-fast: 150ms ease;
 }
 
-i{
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-body);
+  color: var(--text-black);
+  font-family: var(--font-body);
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  font-family: var(--font-secondary);
+  color: rgba(17, 17, 17, 0.7);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: var(--font-body);
+  border: none;
   cursor: pointer;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+input, textarea {
+  font-family: var(--font-body);
+  outline: none;
+  border: 1px solid rgba(17, 17, 17, 0.1);
+  background-color: var(--bg-ivory);
+  transition: border-color var(--transition-fast);
+}
+
+input:focus, textarea:focus {
+  border-color: var(--accent-blue);
 }
 
 
-.container{
-    padding:20px;
-}
-
-@media (max-width:992px){
-
-    .note-card{
-        margin-bottom:20px;
-    }
-
-}
-
-@media (max-width:768px){
-
-    .container{
-        padding:15px;
-    }
-
-    .note-card{
-        border-radius:16px;
-    }
-
-    .card-title{
-        font-size:18px;
-    }
-
-}
-
-@media (max-width:576px){
-
-    .container{
-        padding:10px;
-    }
-
-    .card-body{
-        padding:15px;
-    }
-
-    .btn{
-        width:48%;
-    }
-
+.nv-home-wrapper {
+  padding-bottom: 60px; 
 }

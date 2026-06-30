@@ -1,0 +1,79 @@
+.nv-auth-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 100px);
+  padding: 20px;
+}
+
+.nv-auth-card {
+  background-color: var(--bg-ivory);
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  border-radius: 12px;
+  padding: 40px 32px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: var(--shadow-soft);
+}
+
+.nv-auth-title {
+  font-family: var(--font-body);
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-black);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.nv-form-group {
+  margin-bottom: 20px;
+}
+
+.nv-form-label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-black);
+  margin-bottom: 8px;
+}
+
+.nv-input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(17, 17, 17, 0.15);
+  background-color: var(--bg-ivory);
+  color: var(--text-black);
+  font-size: 15px;
+  transition: all var(--transition-fast);
+}
+
+.nv-input:focus {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 1px var(--accent-blue);
+  outline: none;
+}
+
+.nv-btn-submit {
+  display: block;
+  width: 100%;
+  padding: 12px 24px;
+  background-color: var(--text-black);
+  color: var(--bg-ivory);
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 8px;
+  margin-top: 28px;
+}
+
+.nv-btn-submit:hover:not(:disabled) {
+  background-color: var(--accent-blue);
+  transform: translateY(-2px);
+}
+
+.nv-btn-submit:disabled {
+  background-color: rgba(17, 17, 17, 0.3);
+  cursor: not-allowed;
+  transform: none;
+}

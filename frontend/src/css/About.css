@@ -1,0 +1,60 @@
+.nv-about-wrapper {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.nv-about-card {
+  background-color: var(--bg-ivory);
+  padding: 40px;
+  border-radius: 12px;
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  box-shadow: var(--shadow-soft);
+}
+
+.nv-about-title {
+  font-family: var(--font-display);
+  font-size: 32px;
+  color: var(--text-black);
+  margin-bottom: 24px;
+  border-bottom: 2px solid var(--accent-blue);
+  padding-bottom: 10px;
+  display: inline-block;
+}
+
+.nv-about-intro {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+  color: var(--text-black);
+}
+
+.nv-about-section {
+  margin-bottom: 24px;
+}
+
+.nv-about-section h3 {
+  font-family: var(--font-body);
+  font-size: 18px;
+  color: var(--accent-blue);
+  margin-bottom: 12px;
+}
+
+.nv-about-section p {
+  font-family: var(--font-secondary);
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(17, 17, 17, 0.8);
+}
+
+.nv-about-section ul {
+  padding-left: 20px;
+  font-family: var(--font-secondary);
+  color: rgba(17, 17, 17, 0.8);
+}
+
+.nv-about-section li {
+  margin-bottom: 8px;
+  line-height: 1.6;
+}

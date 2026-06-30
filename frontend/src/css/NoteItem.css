@@ -1,237 +1,149 @@
-
-body {
-    margin: 0;
-    padding: 0;
-    font-family: "Poppins", sans-serif;
-
-    background:
-        radial-gradient(circle at top left, rgba(56, 189, 248, .08), transparent 30%),
-        radial-gradient(circle at bottom right, rgba(139, 92, 246, .08), transparent 35%),
-        #0f172a;
-
-    color: #fff;
-
-    overflow-x: hidden;
+.nv-note-card {
+  background-color: var(--bg-ivory);
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: all var(--transition-fast);
 }
 
 
-.note-card {
-
-    background: rgba(255,255,255,.04);
-
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-
-    border: 1px solid rgba(255,255,255,.08);
-
-    border-radius: 22px;
-
-    transition: .35s ease;
-
-    box-shadow: 0 12px 30px rgba(0,0,0,.12);
-
-    overflow: hidden;
-
+.nv-note-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
 }
 
-.note-card:hover{
-
-    transform: translateY(-6px);
-
-    border-color: rgba(56,189,248,.35);
-
-    box-shadow:0 18px 35px rgba(0,0,0,.16);
-
+.nv-note-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 12px;
 }
 
-
-.card-title{
-
-    color:#fff;
-
-    font-size:1.15rem;
-
-    font-weight:600;
-
-    margin-bottom:6px;
-
+.nv-note-title {
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-black);
+  margin: 0;
+  line-height: 1.4;
+  word-break: break-word;
 }
 
-.card-text{
-
-    color:#cbd5e1;
-
-    font-size:.95rem;
-
-    line-height:1.7;
-
-    margin-top:15px;
-
+.nv-note-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-end;
 }
 
-
-
-.tags-container{
-
-    display:flex;
-
-    flex-wrap:wrap;
-
-    justify-content:flex-end;
-
-    gap:8px;
-
-    max-width:180px;
-
+.nv-note-tag {
+  font-family: var(--font-secondary);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-black);
+  border: 1px solid rgba(17, 17, 17, 0.2);
+  padding: 4px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
 }
 
-.note-tag{
-
-    background:rgba(56,189,248,.10)!important;
-
-    color:#7dd3fc!important;
-
-    border:1px solid rgba(56,189,248,.20);
-
-    border-radius:999px;
-
-    padding:5px 12px;
-
-    font-size:.72rem;
-
-    font-weight:500;
-
-    white-space:nowrap;
-
-    transition:.3s;
-
+.nv-note-desc {
+  font-family: var(--font-secondary);
+  font-size: 14px;
+  color: rgba(17, 17, 17, 0.7);
+  line-height: 1.6;
+  flex-grow: 1;
+  margin: 0 0 24px 0;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
-.note-tag:hover{
-
-    background:rgba(56,189,248,.16)!important;
-
-    border-color:rgba(56,189,248,.35);
+.nv-note-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid rgba(17, 17, 17, 0.08);
 }
 
-
-
-.note-actions{
-
-    display:flex;
-
-    gap:18px;
-
-    margin-top:18px;
-
-}
-
-.edit-icon,
-.delete-icon{
-
-    width:38px;
-
-    height:38px;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    border-radius:50%;
-
-    cursor:pointer;
-
-    transition:.3s;
-
-    font-size:15px;
-
-    border:1px solid rgba(255,255,255,.08);
-
-    background:rgba(255,255,255,.04);
-
-}
-
-.edit-icon{
-
-    color:#38bdf8;
-
-}
-
-.delete-icon{
-
-    color:#fb7185;
-
-}
-
-.edit-icon:hover{
-
-    transform:translateY(-3px);
-
-    border-color:#38bdf8;
-
-}
-
-.delete-icon:hover{
-
-    transform:translateY(-3px);
-
-    border-color:#fb7185;
-
-}
-
-.pin-icon {
-  color: #888;
+.nv-icon-btn {
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  color: rgba(17, 17, 17, 0.4);
   cursor: pointer;
-  transition: 0.2s ease;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.active-pin {
-  color: gold;
-  transform: rotate(20deg);
+.nv-icon-btn:hover {
+  background-color: rgba(17, 17, 17, 0.05);
+  color: var(--text-black);
+}
+
+.nv-pin-btn.active {
+  color: var(--accent-blue);
+  transform: scale(1.1);
+}
+
+.nv-pin-btn.active:hover {
+  background-color: rgba(11, 36, 71, 0.1);
+  color: var(--accent-blue);
+}
+
+.nv-note-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.nv-edit-btn:hover {
+  color: var(--accent-blue);
+  background-color: rgba(11, 36, 71, 0.1);
+}
+
+.nv-delete-btn:hover {
+  color: #e54d4d;
+  background-color: rgba(229, 77, 77, 0.1);
 }
 
 
-::-webkit-scrollbar{
-
-    width:8px;
-
+/* Card active state when pinned */
+.nv-note-card.is-pinned {
+  border: 1px solid var(--accent-blue);
+  box-shadow: 0 0 0 1px var(--accent-blue), var(--shadow-soft);
 }
 
-::-webkit-scrollbar-track{
-
-    background:#0f172a;
-
+/* Pin Icon Design */
+.nv-pin-btn {
+  border-radius: 50% !important; /* Circular background */
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease !important;
 }
 
-::-webkit-scrollbar-thumb{
-
-    background:#334155;
-
-    border-radius:10px;
-
+/* Active Pin Style */
+.nv-pin-btn.active {
+  background-color: var(--accent-blue);
+  color: #ffffff !important;
+  transform: rotate(45deg); /* Thora sa tilt effect */
 }
 
-::-webkit-scrollbar-thumb:hover{
-
-    background:#475569;
-
-}
-
-
-@media(max-width:768px){
-
-    .note-card{
-
-        border-radius:18px;
-
-    }
-
-    .card-title{
-
-        font-size:1rem;
-
-    }
-
+/* Smooth card sort animation */
+.nv-notes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  transition: all 0.3s ease-in-out; /* Smooth repositioning */
 }

@@ -18,20 +18,16 @@ const Notes = () => {
     "Projects",
   ];
 
-  const [search, setSearch] = useState(""); 
+  const [search, setSearch] = useState("");
   const [searchTag, setSearchTag] = useState("");
   const { showAlert } = useContext(AlertContext);
   const [selectedTags, setselectedTags] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [activeTags, setActiveTags] = useState([]);
-  const[showDeleteModal , setShowDeleteModal] =useState(false)
-  const[selectedNote , setSelectedNote] =useState()
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedNote, setSelectedNote] = useState();
 
-  let { notes, getNotes, editNote, setNotes ,deleteNote} = useContext(NoteContext);
-
-
-
-  
+  let { notes, getNotes, editNote, setNotes, deleteNote } = useContext(NoteContext);
 
   const [note, setNote] = useState({
     id: "",
@@ -54,9 +50,10 @@ const Notes = () => {
     setShowModal(true);
   };
 
-let sortedNotes =[...notes].sort((a, b) => {
-  return (b.isPinned === true) - (a.isPinned === true);
-});
+  let sortedNotes = [...notes].sort((a, b) => {
+    return (b.isPinned === true) - (a.isPinned === true);
+  });
+
   const handleChange = (e) => {
     setNote({
       ...note,
@@ -75,17 +72,15 @@ let sortedNotes =[...notes].sort((a, b) => {
     setSearch(value);
   };
 
-const filteredNotes = Array.isArray(sortedNotes)
+  const filteredNotes = Array.isArray(sortedNotes)
     ? sortedNotes.filter((n) => {
-        // Text Search
         const textMatch =
           n.title?.toLowerCase().includes(search.toLowerCase()) ||
           n.description?.toLowerCase().includes(search.toLowerCase());
 
-   
         const tagMatch =
-          activeTags.length === 0 || 
-          n.tags?.includes(activeTags[0]); 
+          activeTags.length === 0 ||
+          n.tags?.includes(activeTags[0]);
 
         return textMatch && tagMatch;
       })
@@ -101,109 +96,101 @@ const filteredNotes = Array.isArray(sortedNotes)
     }
   };
 
-  
   const handleSearchTag = (e) => {
     const value = e.target.value;
     setSearchTag(value);
   };
 
-const toggleTag = (tag) => {
-
-    setActiveTags((prev) => 
-      prev.includes(tag) ? [] : [tag]
-    );
+  const toggleTag = (tag) => {
+    setActiveTags((prev) => (prev.includes(tag) ? [] : [tag]));
   };
 
+  const handleClickDelete = (note) => {
+    setSelectedNote(note);
+    setShowDeleteModal(true);
+  };
 
-
-      const handleClickDelete= (note)=>{
-    setSelectedNote(note)
-      setShowDeleteModal(true)
-    }
-
-    const handleConfirmDelete=()=>{
-      deleteNote(selectedNote._id)
-      setShowDeleteModal(false)
-    }
+  const handleConfirmDelete = () => {
+    deleteNote(selectedNote._id);
+    setShowDeleteModal(false);
+    showAlert("Note Deleted Successfully" , "success")
+  };
 
   return (
-    <>
-      <div className="input-group">
+    <div className="nv-notes-container">
+      <div className="nv-search-wrapper">
         <input
           type="text"
           name="search"
-          className="form-control"
+          className="nv-search-input"
           placeholder="Search in title or description..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)} 
+          onChange={(e) => setSearch(e.target.value)}
         />
       </div>
 
-      {/* Filter Tags Grid */}
-      <div className="tags-grid">
-        {allTags.map((tag) => (
-          <button
-            key={tag}
-            type="button"
-            className={`tag-chip ${
-              activeTags.includes(tag) ? "active-tag" : ""
-            }`}
-            onClick={() => {
-             
-              toggleTag(tag); 
-            }}
-          >
-            {tag}
-          </button>
-        ))}
-      </div>
-<div className="row my-4">
-       
-        {!Array.isArray(sortedNotes) || sortedNotes.length === 0 ? (
-          <h2 className="mt-3">No Notes To Display</h2>
-        ) : filteredNotes.length === 0 ? (
-    
-          <h4 className="text-center mt-4 w-100 text-white">
-            <i className="fa-solid fa-magnifying-glass mb-2 d-block fs-3"></i>
-            No matching notes found
-          </h4>
-        ) : (
-       
-          filteredNotes.map((noteItem) => (
-            <NoteItem
-              key={noteItem._id}
-              note={noteItem}
-              updatenote={updatenote}
-            handleClickDelete={handleClickDelete}
-            />
-          ))
-        )}
+     
+      <div className="nv-filter-tags-scroll">
+        <div className="nv-filter-tags">
+          {allTags.map((tag) => (
+            <button
+              key={tag}
+              type="button"
+              className={`nv-tag-chip ${
+                activeTags.includes(tag) ? "nv-active-tag" : ""
+              }`}
+              onClick={() => toggleTag(tag)}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
       </div>
 
-
+<div className="nv-notes-content">
+  <div className="nv-notes-grid">
+    {!Array.isArray(sortedNotes) || sortedNotes.length === 0 ? (
+      <h2 className="mt-3">No Notes To Display</h2>
+    ) : filteredNotes.length === 0 ? (
+      <h4 className="text-center mt-4 w-100">
+        <i className="fa-solid fa-magnifying-glass mb-2 d-block fs-3"></i>
+        No matching notes found
+      </h4>
+    ) : (
+      filteredNotes.map((noteItem) => (
+        <NoteItem
+          key={noteItem._id}
+          note={noteItem}
+          updatenote={updatenote}
+          handleClickDelete={handleClickDelete}
+        />
+      ))
+    )}
+  </div>
+</div>
 
       {showModal && (
-        <div className="glass-modal-overlay">
-          <div className="glass-modal">
-            <div className="glass-header">
+        <div className="nv-modal-overlay">
+          <div className="nv-modal">
+            <div className="nv-modal-header">
               <h3>
                 <i className="fa-solid fa-pen-to-square me-2"></i>
                 Edit Note
               </h3>
               <button
-                className="close-btn"
+                className="nv-modal-close"
                 onClick={() => setShowModal(false)}
               >
                 <i className="fa-solid fa-xmark"></i>
               </button>
             </div>
 
-            <div className="glass-body">
+            <div className="nv-modal-body">
               <div className="mb-3">
                 <label>Title</label>
                 <input
                   type="text"
-                  className="form-control glass-input"
+                  className="nv-search-input"
                   name="etitle"
                   value={note.etitle}
                   onChange={handleChange}
@@ -214,20 +201,20 @@ const toggleTag = (tag) => {
                 <label>Description</label>
                 <textarea
                   rows="5"
-                  className="form-control glass-input"
+                  className="nv-search-input"
                   name="edescription"
                   value={note.edescription}
                   onChange={handleChange}
                 />
               </div>
 
-              <div className="tags-grid">
+              <div className="nv-filter-tags">
                 {allTags.map((tag) => (
                   <button
                     key={tag}
                     type="button"
-                    className={`tag-chip ${
-                      selectedTags.includes(tag) ? "active-tag" : ""
+                    className={`nv-tag-chip ${
+                      selectedTags.includes(tag) ? "nv-active-tag" : ""
                     }`}
                     onClick={() => {
                       if (
@@ -239,9 +226,7 @@ const toggleTag = (tag) => {
                       }
 
                       handleCheckChange({
-                        target: {
-                          value: tag,
-                        },
+                        target: { value: tag },
                       });
                     }}
                   >
@@ -251,9 +236,9 @@ const toggleTag = (tag) => {
               </div>
             </div>
 
-            <div className="glass-footer">
+            <div className="nv-modal-footer">
               <button
-                className="cancel-btn"
+                className="nv-btn-cancel"
                 onClick={() => setShowModal(false)}
               >
                 Cancel
@@ -263,7 +248,7 @@ const toggleTag = (tag) => {
                 disabled={
                   note.etitle.length < 5 || note.edescription.length < 5
                 }
-                className="save-btn"
+                className="nv-btn-save"
                 onClick={handleClick}
               >
                 <i className="fa-solid fa-floppy-disk me-2"></i>
@@ -274,58 +259,51 @@ const toggleTag = (tag) => {
         </div>
       )}
 
-
-
-
-      
-{/* Delete Confirmation Modal */}
+      {/* Delete Confirmation Modal */}
       {showDeleteModal && (
-        <div className="glass-modal-overlay">
-          <div className="glass-modal">
-            
-            <div className="glass-header">
-              <h3 className="text-danger">
+        <div className="nv-modal-overlay">
+          <div className="nv-modal nv-modal-small">
+            <div className="nv-modal-header">
+              <h3 className="nv-text-danger">
                 <i className="fa-solid fa-trash me-2"></i>
                 Confirm Delete
               </h3>
               <button
-                className="close-btn"
+                className="nv-modal-close"
                 onClick={() => setShowDeleteModal(false)}
               >
                 <i className="fa-solid fa-xmark"></i>
               </button>
             </div>
 
-            <div className="glass-body text-center py-4">
-              <i className="fa-solid fa-circle-exclamation text-warning mb-3" style={{fontSize: "3rem"}}></i>
-              <h5 className="mb-2">Are you sure?</h5>
-              <p className="text-white">
+            <div className="nv-modal-body nv-modal-center">
+              <i className="fa-solid fa-circle-exclamation nv-warning-icon"></i>
+              <h5 className="nv-modal-title">Are you sure?</h5>
+              <p className="nv-modal-text">
                 Do you really want to delete this note? This process cannot be undone.
               </p>
             </div>
 
-            <div className="glass-footer">
+            <div className="nv-modal-footer">
               <button
-                className="cancel-btn"
+                className="nv-btn-cancel"
                 onClick={() => setShowDeleteModal(false)}
               >
                 Cancel
               </button>
 
               <button
-                className="btn btn-danger px-4"
-                style={{borderRadius: "8px"}}
+                className="nv-btn-danger"
                 onClick={handleConfirmDelete}
               >
                 <i className="fa-solid fa-trash-can me-2"></i>
                 Yes, Delete
               </button>
             </div>
-            
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

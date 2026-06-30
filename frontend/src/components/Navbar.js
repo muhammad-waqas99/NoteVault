@@ -1,106 +1,94 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import '../css/navbar.css'
+import '../css/navbar.css';
 
 const Navbar = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => setIsOpen(!isOpen);
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
 
   return (
-<nav className="navbar navbar-expand-lg">
-  <div className="container-fluid">
-
-    <Link className="navbar-brand" to="/">
-      NoteVault
-    </Link>
-
-    {/* Toggler */}
-    <button
-      className="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNav"
-      aria-controls="navbarNav"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span className="navbar-toggler-icon"></span>
-    </button>
-
-    <div className="collapse navbar-collapse" id="navbarNav">
-      <ul className="navbar-nav ms-auto">
-
-        <li className="nav-item">
-          <Link
-            className={`nav-link ${location.pathname === "/" ? "active" : ""}`}
-            to="/"
-          >
-            Home
-          </Link>
-        </li>
-
-        <li className="nav-item">
-          <Link
-            className={`nav-link ${location.pathname === "/about" ? "active" : ""}`}
-            to="/about"
-          >
-            About
-          </Link>
-
-
-        </li>
-
-           
-
-{
-  localStorage.getItem("token") ? (
-  
-      <button
-        onClick={() => {
-    localStorage.removeItem("token");
-  navigate("/login");
-
-        }}
-      >
-        Logout
-      </button>
-    
-  ) : (
-    <>
-      <li className="nav-item">
-        <Link
-          className={`nav-link ${
-            location.pathname === "/login" ? "active" : ""
-          }`}
-          to="/login"
-        >
-          Login
+    <nav className="nv-navbar">
+      <div className="nv-container">
+        
+        {/* LOGO (Tusker Font) */}
+        <Link className="nv-brand" to="/">
+          NoteVault
         </Link>
-      </li>
 
-      <li className="nav-item">
-        <Link
-          className={`nav-link ${
-            location.pathname === "/signup" ? "active" : ""
-          }`}
-          to="/signup"
+        {/* Mobile Menu Toggler */}
+        <button 
+          className="nv-toggler" 
+          onClick={toggleMenu}
+          aria-label="Toggle navigation"
         >
-          Signup
-        </Link>
-      </li>
-    </>
-  )
-}
+          <span className="nv-toggler-icon"></span>
+          <span className="nv-toggler-icon"></span>
+          <span className="nv-toggler-icon"></span>
+        </button>
 
+        {/* Navigation Links */}
+        <div className={`nv-collapse ${isOpen ? "open" : ""}`}>
+          <ul className="nv-nav-list">
+            <li className="nv-nav-item">
+              <Link
+                className={`nv-nav-link ${location.pathname === "/" ? "active" : ""}`}
+                to="/"
+                onClick={() => setIsOpen(false)}
+              >
+                Home
+              </Link>
+            </li>
 
-      
+            <li className="nv-nav-item">
+              <Link
+                className={`nv-nav-link ${location.pathname === "/about" ? "active" : ""}`}
+                to="/about"
+                onClick={() => setIsOpen(false)}
+              >
+                About
+              </Link>
+            </li>
 
-
-      </ul>
-    </div>
-
-  </div>
-</nav>
+            {/* Auth Buttons / Links */}
+            {localStorage.getItem("token") ? (
+              <li className="nv-nav-item">
+                <button className="nv-btn-logout" onClick={handleLogout}>
+                  Logout
+                </button>
+              </li>
+            ) : (
+              <>
+                <li className="nv-nav-item">
+                  <Link
+                    className={`nv-nav-link ${location.pathname === "/login" ? "active" : ""}`}
+                    to="/login"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Login
+                  </Link>
+                </li>
+                <li className="nv-nav-item">
+                  <Link
+                    className={`nv-btn-signup`}
+                    to="/signup"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Signup
+                  </Link>
+                </li>
+              </>
+            )}
+          </ul>
+        </div>
+      </div>
+    </nav>
   );
 };
 

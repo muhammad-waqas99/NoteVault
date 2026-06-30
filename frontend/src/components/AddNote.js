@@ -1,193 +1,140 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState } from 'react';
 import NoteContext from '../contexts/Note/NoteContext';
-import '../css/AddNote.css'
+import '../css/AddNote.css';
 import AlertContext from '../contexts/Alert/AlertContext';
 
 const AddNote = () => {
-
   const allTags = [
-  "Personal",
-  "Work",
-  "Study",
-  "Ideas",
-  "Important",
-  "Shopping",
-  "Health",
-  "Finance",
-  "Travel",
-  "Projects"
-];
+    "Personal", "Work", "Study", "Ideas", "Important",
+    "Shopping", "Health", "Finance", "Travel", "Projects"
+  ];
 
-    const{showAlert} =useContext(AlertContext)
+  const { showAlert } = useContext(AlertContext);
+  const [selectedTags, setselectedTags] = useState([]);
+  const { addNote } = useContext(NoteContext);
+  const [note, setnote] = useState({ title: "", description: "" });
 
-const [selectedTags , setselectedTags] =useState([])
-    
-      const { addNote } = useContext(NoteContext) ;
+  const handleChange = (e) => {
+    setnote({ ...note, [e.target.name]: e.target.value });
+  };
 
-      const [note , setnote] = useState({title : "", description : "" } )
-
-      const handleChange =(e)=>{
-         setnote({...note, [e.target.name]  : e.target.value })
-      }
-   const handleClick = (e) => {
+  const handleClick = (e) => {
     e.preventDefault();
 
     addNote(
-        note.title,
-        note.description,
-       selectedTags.length === 0 ? ["Personal"] : selectedTags
+      note.title,
+      note.description,
+      selectedTags.length === 0 ? ["Personal"] : selectedTags
     );
 
-    showAlert("Note Added Successfully " , "success")
+    showAlert("Note Added Successfully ", "success");
 
     setnote({
-        title: "",
-        description: "",
-       
+      title: "",
+      description: "",
     });
 
-    setselectedTags([])
-};
+    setselectedTags([]);
+  };
 
-
-
-
-
-
-const handleCheckChange = (e) => {
-
+  const handleCheckChange = (e) => {
     const value = e.target.value;
 
     if (selectedTags.includes(value)) {
-
-        setselectedTags(
-            selectedTags.filter(tag => tag !== value)
-        );
-
+      setselectedTags(selectedTags.filter(tag => tag !== value));
     } else {
-
-        setselectedTags([
-            ...selectedTags,
-            value
-        ]);
-
+      setselectedTags([...selectedTags, value]);
     }
+  };
 
-};
-   
-    
-
-
-      
   return (
-  <>
-    <div className="add-note-card">
-
-        <h2 className="mb-4">Add New Note</h2>
+    <div className="nv-add-note-wrapper">
+      <div className="nv-add-note-card">
+        <h2 className="nv-add-note-title">Add New Note</h2>
 
         <form>
 
-            <div className="mb-3">
-                <label htmlFor="title" className="form-label">Title</label>
-
-                <input
-                    type="text"
-                    className="form-control glass-input"
-                    id="title"
-                    name="title"
-                    onChange={handleChange}
-                    required
-                    minLength={5}
-                    value={note.title}
-                />
-            </div>
-
-            <div className="mb-3">
-                <label htmlFor="description" className="form-label">Description</label>
-
-                <textarea
-                    className="form-control glass-input"
-                    id="description"
-                    rows="4"
-                    name="description"
-                    onChange={handleChange}
-                    required
-                    minLength={5}
-                    value={note.description}
-                ></textarea>
-            </div>
-
-            <div className="mb-4">
-              
 
 
+          <div className="nv-form-group">
+  <label htmlFor="title" className="nv-form-label">
+    Title 
+    <span className="nv-input-hint">(min 3 chars)</span>
+  </label>
+  <input
+                type="text"
+              className="nv-input"
+              id="title"
+              name="title"
+              onChange={handleChange}
+              required
+              minLength={5}
+              value={note.title}
+  />
 
-<div className="mb-4">
-    <label className="form-label">
-        Tags
-        <span className="tag-limit">
-            ({selectedTags.length}/3)
-        </span>
-    </label>
 
-<div className="tags-grid">
+  <div className="nv-form-group">
+  <label htmlFor="description" className="nv-form-label">
+    Description 
+    <span className="nv-input-hint">(min 6 chars)</span>
+  </label>
+  <textarea
+              className="nv-textarea"
+              id="description"
+              rows="4"
+              name="description"
+              onChange={handleChange}
+              required
+              minLength={5}
+              value={note.description}
+  />
+</div>
+</div>
 
-    {allTags.map((tag) => (
 
-        <button
-            key={tag}
-            type="button"
-            className={`tag-chip ${
-                selectedTags.includes(tag) ? "active-tag" : ""
-            }`}
-            onClick={() => {
+          <div className="nv-form-group">
+            <label className="nv-form-label">
+              Tags
+              <span className="nv-tag-limit">
+                ({selectedTags.length}/3)
+              </span>
+            </label>
 
-                if (
-                    selectedTags.length === 3 &&
-                    !selectedTags.includes(tag)
-                ) {
-
-                    showAlert("Only 3 tags are allowed", "danger");
-                    return;
-
-                }
-
-                handleCheckChange({
-                    target: {
-                        value: tag
+            <div className="nv-tags-grid">
+              {allTags.map((tag) => (
+                <button
+                  key={tag}
+                  type="button"
+                  className={`nv-tag-chip ${selectedTags.includes(tag) ? "active" : ""}`}
+                  onClick={() => {
+                    if (selectedTags.length === 3 && !selectedTags.includes(tag)) {
+                      showAlert("Only 3 tags are allowed", "danger");
+                      return;
                     }
-                });
-
-            }}
-        >
-            {tag}
-        </button>
-
-    ))}
-
-</div>
-
-</div>
-
-
-               
+                    handleCheckChange({
+                      target: { value: tag }
+                    });
+                  }}
+                >
+                  {tag}
+                </button>
+              ))}
             </div>
+          </div>
 
-            <button
-                disabled={note.title.length <5  || note.description.length<5 }
-                type="submit"
-                className="btn add-note-btn"
-                onClick={handleClick}
-            >
-                <i className="fa-solid fa-plus me-2"  disabled={note.title.length <5  || note.description.length<5 }></i>
-                Add Note
-                     
-            </button>
-
+          <button
+            disabled={note.title.length < 3 || note.description.length < 6}
+            type="submit"
+            className="nv-btn-add"
+            onClick={handleClick}
+          >
+            <i className="fa-solid fa-plus" style={{ marginRight: '8px' }}></i>
+            Add Note
+          </button>
         </form>
-
+      </div>
     </div>
-</>
   );
-}
-export default AddNote
+};
+
+export default AddNote;

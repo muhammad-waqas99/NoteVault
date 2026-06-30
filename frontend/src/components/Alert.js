@@ -3,25 +3,19 @@ import AlertContext from "../contexts/Alert/AlertContext";
 import "../css/Alert.css";
 
 const Alert = () => {
-
     const { alert } = useContext(AlertContext);
 
     return (
-
-        <div className="alert-container">
-
+        <div className="nv-alert-container">
             {alert && (
-
                 <div
-                    className={`glass-alert ${
+                    className={`nv-alert ${
                         alert.type === "success"
-                            ? "glass-success"
-                            : "glass-danger"
+                            ? "nv-alert-success"
+                            : "nv-alert-danger"
                     }`}
                 >
-
-                    <div className="alert-content">
-
+                    <div className="nv-alert-content">
                         <i
                             className={`fa-solid ${
                                 alert.type === "success"
@@ -29,19 +23,12 @@ const Alert = () => {
                                     : "fa-circle-xmark"
                             }`}
                         ></i>
-
                         <span>{alert.message}</span>
-
                     </div>
-
                 </div>
-
             )}
-
         </div>
-
     );
-
 };
 
 export default Alert;
