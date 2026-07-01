@@ -35,6 +35,10 @@ app.use(express.json())
 app.use('/api/auth' , userRoute)
 app.use('/api/notes' , notesRoute)
 
+app.get('/', (req, res) => {
+  res.send('NoteVault API is running securely.');
+});
+
 
 
 
