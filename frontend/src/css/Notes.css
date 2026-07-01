@@ -104,9 +104,10 @@
 }
 
 .nv-filter-tags {
-  display: flex;
+display: flex;
   gap: 12px;
-  width: max-content;
+  flex-wrap: wrap; 
+  width: 100%;
 }
 
 .nv-notes-content {
@@ -211,6 +212,8 @@
 .nv-modal-body {
   padding: 32px;
   overflow-y: auto;
+  overflow-x: hidden; /* Ye line scrollbar ko rok degi */
+  word-wrap: break-word; 
 }
 
 .nv-modal-center {
