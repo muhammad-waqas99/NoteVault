@@ -18,7 +18,18 @@ const userRoute = require("./routes/user")
 const notesRoute = require("./routes/notes")
 
 connectToDB()
-app.use(cors())
+
+
+
+const corsOptions = {
+  origin: process.env.NODE_ENV === 'production' 
+    ? process.env.FRONTEND_URL // .env se URL utha lo
+    : "*", 
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+};
+
+app.use(cors(corsOptions));
 app.use(express.json())
 
 app.use('/api/auth' , userRoute)
