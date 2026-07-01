@@ -1,5 +1,13 @@
 # NoteVault
 
+<div align="center">
+
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=for-the-badge&logo=vercel)](https://notevault1.netlify.app/)
+
+</div>
+
+
+
 NoteVault is a MERN stack note-taking application that allows users to create, edit, delete, and manage their personal notes securely. It features a clean, responsive user interface styled with custom CSS variables and utility classes, built on top of React, Bootstrap, Node.js, Express, and MongoDB.
 
 ---
