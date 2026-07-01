@@ -66,7 +66,7 @@ const AddNote = () => {
               name="title"
               onChange={handleChange}
               required
-              minLength={5}
+              minLength={3}
               value={note.title}
             />
           </div>
@@ -83,7 +83,7 @@ const AddNote = () => {
               name="description"
               onChange={handleChange}
               required
-              minLength={5}
+              minLength={6}
               value={note.description}
             />
           </div>
