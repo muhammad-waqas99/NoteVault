@@ -66,9 +66,15 @@ const Notes = () => {
     setShowModal(true);
   };
 
-  let sortedNotes = [...notes].sort((a, b) => {
-    return (b.isPinned === true) - (a.isPinned === true);
-  });
+let sortedNotes = [...notes].sort((a, b) => {
+
+  if (a.isPinned !== b.isPinned) {
+    return b.isPinned - a.isPinned; 
+  }
+
+ 
+ return b._id.localeCompare(a._id);
+});
 
   const handleChange = (e) => {
     setNote({
