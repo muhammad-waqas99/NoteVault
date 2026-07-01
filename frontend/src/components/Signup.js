@@ -36,7 +36,7 @@ const Signup = () => {
 
       if (json.success) {
         localStorage.setItem("token", json.token);
-        navigate("/login");
+        navigate("/");
         showAlert("Account Created Successfully", "success");
       } else {
         showAlert(json.error || "Signup failed", "danger");
