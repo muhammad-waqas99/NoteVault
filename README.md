@@ -148,7 +148,7 @@ notevault/
 
 ### Clone the Repository
 ```bash
-git clone https://github.com/yourusername/notevault.git
+git clone [https://github.com/yourusername/notevault.git](https://github.com/muhammad-waqas99/NoteVault.git)
 cd notevault
 ```
 
@@ -160,7 +160,7 @@ npm install
 
 ### Install Frontend Dependencies
 ```bash
-cd ../frontend
+cd frontend
 npm install
 ```
 
